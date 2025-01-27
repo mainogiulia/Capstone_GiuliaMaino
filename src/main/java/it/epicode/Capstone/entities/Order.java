@@ -1,5 +1,6 @@
 package it.epicode.Capstone.entities;
 
+import it.epicode.Capstone.auth.AppUser;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,7 +23,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "costumer_id", nullable = false)
-    private Costumer costumer;
+    private AppUser appUser;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderItem> items;

@@ -29,8 +29,8 @@ public class AppUser {
     @Column(nullable = false)
     private String cognome;
 
-    @Column
-    private String avatar; // Path per il salvataggio nel cloud
+   /* @Column
+    private String avatar;*/
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)

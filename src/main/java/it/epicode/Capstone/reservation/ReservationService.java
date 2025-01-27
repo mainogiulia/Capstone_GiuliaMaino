@@ -10,8 +10,6 @@ import it.epicode.Capstone.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -29,6 +27,10 @@ public class ReservationService {
     public Reservation createReservation(ReservationRequest reservationRequest) {
         AppUser currentUser = getCurrentUser();
 
+        if (reservationRequest.getCostumerId() != null && !reservationRequest.getCostumerId().equals(currentUser.getId())) {
+            throw new UnauthorizedException("Non puoi prenotare con questo id");
+        }
+
         Reservation reservation = new Reservation();
         reservation.setUser(currentUser); // Imposta l'utente collegato
         reservation.setReservationDate(reservationRequest.getReservationDate());
@@ -44,7 +46,7 @@ public class ReservationService {
         AppUser loggedInUser = getCurrentUser();
 
         if (!reservation.getUser().getId().equals(loggedInUser.getId())) {
-            throw new UnauthorizedException("Non sei autorizzato ad eseguire questa operazione");
+            throw new UnauthorizedException("Non sei autorizzato a cancellare questa prenotazione");
         }
 
         reservationRepository.delete(reservation);

@@ -24,7 +24,7 @@ public class AuthRunner implements ApplicationRunner {
                     "adminpwd",
                     Set.of(Role.ROLE_ADMIN),
                     "Admin",  // Nome
-                    "User",   // Cognome
+                    "Admin",   // Cognome
                     "admin@example.com"  // Email
             );
         }
@@ -35,7 +35,7 @@ public class AuthRunner implements ApplicationRunner {
                     "user",
                     "userpwd",
                     Set.of(Role.ROLE_USER),
-                    "Normal", // Nome
+                    "User", // Nome
                     "User",   // Cognome
                     "user@example.com"  // Email
             );
