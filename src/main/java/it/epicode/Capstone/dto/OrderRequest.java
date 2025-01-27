@@ -1,4 +1,4 @@
-package it.epicode.Capstone.DTO;
+package it.epicode.Capstone.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;

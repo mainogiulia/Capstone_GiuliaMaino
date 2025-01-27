@@ -42,6 +42,11 @@ public class ExceptionHandlerClass {
         return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(value = OrderNotFoundException   .class)
+    protected ResponseEntity<Object> handleOrderNotFoundError(OrderNotFoundException    e) {
+        return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(value = ReservationNotFoundException.class)
     protected ResponseEntity<Object> handleReservationNotFoundError(ReservationNotFoundException e) {
         return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.NOT_FOUND);

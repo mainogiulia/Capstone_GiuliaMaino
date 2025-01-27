@@ -15,6 +15,13 @@ import java.util.List;
 public class ReservationController {
     private final ReservationService reservationService;
 
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Reservation>> getAllReservations() {
+        List<Reservation> reservations = reservationService.getAllReservations();
+        return ResponseEntity.ok(reservations);
+    }
+
     @GetMapping("/my-reservations")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Reservation>> getUserReservations() {
@@ -29,7 +36,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
         reservationService.deleteReservation(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

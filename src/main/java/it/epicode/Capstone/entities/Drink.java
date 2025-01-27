@@ -5,19 +5,17 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "orderItems")
-public class OrderItem {
+@Table(name = "drinks")
+public class Drink {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(nullable = false)
-    private int quantity;
+    private String nome;
 
-    private double subtotal;
+    private String descrizione;
 
-    @ManyToOne
-    @JoinColumn(name = "menu_item_id", nullable = false)
-    private MenuItem menuItem;
-
+    @Column(nullable = false)
+    private Double prezzo;
 }

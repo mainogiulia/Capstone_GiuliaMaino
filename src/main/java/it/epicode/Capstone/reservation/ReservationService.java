@@ -2,6 +2,7 @@ package it.epicode.Capstone.reservation;
 
 import it.epicode.Capstone.auth.AppUser;
 import it.epicode.Capstone.auth.AppUserRepository;
+import it.epicode.Capstone.auth.Role;
 import it.epicode.Capstone.dto.ReservationRequest;
 import it.epicode.Capstone.entities.Reservation;
 import it.epicode.Capstone.exceptions.ReservationNotFoundException;
@@ -17,6 +18,10 @@ import java.util.List;
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final AppUserRepository appUserRepository;
+
+    private boolean isAdmin(AppUser user) {
+        return user.getRoles().contains(Role.ROLE_ADMIN); // Controlla se l'utente ha il ruolo ADMIN
+    }
 
     private AppUser getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -45,7 +50,7 @@ public class ReservationService {
 
         AppUser loggedInUser = getCurrentUser();
 
-        if (!reservation.getUser().getId().equals(loggedInUser.getId())) {
+        if (!reservation.getUser().getId().equals(loggedInUser.getId()) && !isAdmin(loggedInUser)) {
             throw new UnauthorizedException("Non sei autorizzato a cancellare questa prenotazione");
         }
 
@@ -55,5 +60,15 @@ public class ReservationService {
     public List<Reservation> getUserReservations() {
         AppUser loggedInUser = getCurrentUser();
         return reservationRepository.findByUserId(loggedInUser.getId());
+    }
+
+    public List<Reservation> getAllReservations() {
+        AppUser loggedInUser = getCurrentUser();
+
+        if (!isAdmin(loggedInUser)) {
+            throw new UnauthorizedException("Non sei autorizzato a visualizzare tutte le prenotazioni");
+        }
+
+        return reservationRepository.findAll();
     }
 }
