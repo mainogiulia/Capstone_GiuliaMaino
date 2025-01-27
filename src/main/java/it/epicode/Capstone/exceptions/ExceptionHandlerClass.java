@@ -42,6 +42,11 @@ public class ExceptionHandlerClass {
         return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(value = ReservationNotFoundException.class)
+    protected ResponseEntity<Object> handleReservationNotFoundError(ReservationNotFoundException e) {
+        return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(value = ResourceNotFoundException.class)
     protected ResponseEntity<Object> handleResourceNotFoundError(ResourceNotFoundException e) {
         return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.NOT_FOUND);
@@ -56,6 +61,11 @@ public class ExceptionHandlerClass {
     protected ResponseEntity<String> handleUploadError(UploadException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     } // USATA?? DA CANCELLARE??
+
+    @ExceptionHandler(value = UserNotFoundException.class)
+    protected ResponseEntity<String> handleUserNotFoundError(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 
     /*@ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException ex) {

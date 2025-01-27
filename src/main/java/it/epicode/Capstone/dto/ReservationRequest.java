@@ -1,4 +1,4 @@
-package it.epicode.Capstone.DTO;
+package it.epicode.Capstone.dto;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Min;

@@ -1,5 +1,6 @@
 package it.epicode.Capstone.entities;
 
+import it.epicode.Capstone.auth.AppUser;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,6 +21,6 @@ public class Reservation {
     private int numberOfGuests;
 
     @ManyToOne
-    @JoinColumn(name = "costumer_id", nullable = false)
-    private Costumer costumer;
+    @JoinColumn(name = "user_id", nullable = false)
+    private AppUser user;
 }
