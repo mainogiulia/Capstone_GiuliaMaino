@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class ReservationRequest {
-
     @NotNull(message = "La data della prenotazione non può essere vuota")
     @FutureOrPresent(message = "La data della prenotazione non può essere nel passato")
     private LocalDateTime reservationDate;

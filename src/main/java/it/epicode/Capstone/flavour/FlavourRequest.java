@@ -6,9 +6,6 @@ import lombok.Data;
 
 @Data
 public class FlavourRequest {
-    @NotNull(message = "L'ID del gusto non può essere nullo")
-    private Long id;
-
     @NotBlank(message = "Il nome del gusto non può essere vuoto")
     private String name;
 

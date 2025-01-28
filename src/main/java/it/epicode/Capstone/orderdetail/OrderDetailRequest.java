@@ -1,5 +1,6 @@
 package it.epicode.Capstone.orderdetail;
 
+import it.epicode.Capstone.scoopquantity.ScoopQuantityRequest;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -9,15 +10,9 @@ import java.util.List;
 
 @Data
 public class OrderDetailRequest {
-    @NotNull(message = "L'ID del dettaglio ordine non può essere nullo")
-    private Long id;
-
-    @NotEmpty(message = "La lista dei gusti non può essere vuota")
-    private List<Long> flavourIds;
-
     @Positive(message = "Il numero di palline deve essere un numero positivo")
-    private int numberOfScoops;
+    private int totalScoops;
 
-    @PositiveOrZero(message = "Il prezzo deve essere un numero positivo o zero")
-    private int price;
+    @NotNull(message = "Campo mancante")
+    private List<ScoopQuantityRequest> scoopQuantities;
 }

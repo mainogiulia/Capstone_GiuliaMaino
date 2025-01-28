@@ -10,6 +10,8 @@ import it.epicode.Capstone.flavour.Flavour;
 import it.epicode.Capstone.flavour.FlavourRepository;
 import it.epicode.Capstone.orderdetail.OrderDetail;
 import it.epicode.Capstone.orderdetail.OrderDetailRequest;
+import it.epicode.Capstone.scoopquantity.ScoopQuantity;
+import it.epicode.Capstone.scoopquantity.ScoopQuantityRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -38,83 +40,98 @@ public class OrderService {
     }
 
     //CREO UN NUOVO ORDINE
-
     public Order createOrder(OrderRequest orderRequest) {
-        AppUser loggedInUser = getCurrentUser();
+
+        AppUser appUser = appUserRepository.findById(orderRequest.getAppUserId())
+                .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
 
         Order order = new Order();
-        order.setAppUser(loggedInUser);
+        order.setAppUser(appUser);
         order.setOrderDate(orderRequest.getOrderDate());
 
-        int total = 0;
         List<OrderDetail> orderDetails = new ArrayList<>();
+        int totalScoops = 0;
+
         for (OrderDetailRequest detailRequest : orderRequest.getDetails()) {
-            OrderDetail detail = new OrderDetail();
-            detail.setNumberOfScoops(detailRequest.getNumberOfScoops());
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setTotalScoops(detailRequest.getTotalScoops());
 
-            List<Flavour> flavours = flavourRepository.findAllById(detailRequest.getFlavourIds());
-            if (flavours.isEmpty()) {
-                throw new IllegalArgumentException("Flavours not found for IDs: " + detailRequest.getFlavourIds());
+            List<ScoopQuantity> scoopQuantities = new ArrayList<>();
+            for (ScoopQuantityRequest scoopRequest : detailRequest.getScoopQuantities()) {
+                ScoopQuantity scoopQuantity = new ScoopQuantity();
+                scoopQuantity.setNumberOfScoops(scoopRequest.getNumberOfScoops());
+
+                Flavour flavour = flavourRepository.findById(scoopRequest.getFlavourId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Gusto non trovato con ID: " + scoopRequest.getFlavourId()));
+                scoopQuantity.setFlavour(flavour);
+
+                scoopQuantity.setOrderDetail(orderDetail);
+                scoopQuantities.add(scoopQuantity);
+
+                totalScoops += scoopRequest.getNumberOfScoops();
             }
-            detail.setFlavours(flavours);
-
-            int price = detailRequest.getNumberOfScoops() * pricePerScoop;
-            detail.setPrice(price);
-            total += price;
-
-            detail.setOrder(order);
-            orderDetails.add(detail);
+            orderDetail.setScoopQuantities(scoopQuantities);
+            orderDetail.setOrder(order);
+            orderDetails.add(orderDetail);
         }
 
-        order.setTotalPrice(total);
         order.setDetails(orderDetails);
+
+        int totalPrice = totalScoops * 2;
+        order.setTotalPrice(totalPrice);
 
         return orderRepository.save(order);
     }
 
-    //RECUPERO TUTTI GLI ORDINI
+    // RECUPERO GLI ORDINI (SOLO QUELLI DELL'UTENTE O TUTTI SE ADMIN)
     public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+        AppUser currentUser = getCurrentUser();
+
+        if (isAdmin(currentUser)) {
+            return orderRepository.findAll();
+        } else {
+            return orderRepository.findByAppUserId(currentUser.getId());
+        }
     }
 
     //MODIFICO UN ORDINE
     public Order updateOrder(Long orderId, OrderRequest orderRequest) {
-        AppUser loggedInUser = getCurrentUser();
-
-        // Controllo se l'utente è autorizzato (admin)
-        if (!isAdmin(loggedInUser)) {
-            throw new UnauthorizedException("Non sei autorizzato ad eseguire questa operazione");
-        }
-
-        // Recupera l'ordine esistente o lancia un'eccezione se non trovato
         Order existingOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Ordine con ID " + orderId + " non trovato"));
 
-        int total = 0;
-        List<OrderDetail> orderDetails = new ArrayList<>();
+        AppUser appUser = appUserRepository.findById(orderRequest.getAppUserId())
+                .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
 
+        existingOrder.setAppUser(appUser);
+        existingOrder.setOrderDate(orderRequest.getOrderDate());
+        existingOrder.setTotalPrice(orderRequest.getTotalPrice());
+
+        existingOrder.getDetails().clear();
+
+        List<OrderDetail> updatedDetails = new ArrayList<>();
         for (OrderDetailRequest detailRequest : orderRequest.getDetails()) {
-            OrderDetail detail = new OrderDetail();
-            detail.setNumberOfScoops(detailRequest.getNumberOfScoops());
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setTotalScoops(detailRequest.getTotalScoops());
+            orderDetail.setOrder(existingOrder);
 
-            List<Flavour> flavours = flavourRepository.findAllById(detailRequest.getFlavourIds());
-            if (flavours.isEmpty()) {
-                throw new IllegalArgumentException("Flavours not found for IDs: " + detailRequest.getFlavourIds());
+            List<ScoopQuantity> updatedScoopQuantities = new ArrayList<>();
+            for (ScoopQuantityRequest scoopRequest : detailRequest.getScoopQuantities()) {
+                ScoopQuantity scoopQuantity = new ScoopQuantity();
+                scoopQuantity.setNumberOfScoops(scoopRequest.getNumberOfScoops());
+
+                Flavour flavour = flavourRepository.findById(scoopRequest.getFlavourId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Gusto non trovato con ID: " + scoopRequest.getFlavourId()));
+                scoopQuantity.setFlavour(flavour);
+
+                scoopQuantity.setOrderDetail(orderDetail);
+                updatedScoopQuantities.add(scoopQuantity);
             }
-            detail.setFlavours(flavours);
 
-            int price = detailRequest.getNumberOfScoops() * pricePerScoop;
-            detail.setPrice(price);
-            total += price;
-
-            detail.setOrder(existingOrder);
-            orderDetails.add(detail);
+            orderDetail.setScoopQuantities(updatedScoopQuantities);
+            updatedDetails.add(orderDetail);
         }
 
-        existingOrder.setDetails(orderDetails);
-
-        existingOrder.setTotalPrice(total);
-        existingOrder.setOrderDate(orderRequest.getOrderDate());
+        existingOrder.setDetails(updatedDetails);
 
         return orderRepository.save(existingOrder);
     }

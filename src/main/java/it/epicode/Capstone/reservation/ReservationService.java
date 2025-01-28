@@ -64,14 +64,14 @@ public class ReservationService {
         return reservationRepository.findByUserId(loggedInUser.getId());
     }
 
-    //RECUPERO TUTTE LE PRENOTAZIONI (SOLO ADMIN)
-    public List<Reservation> getAllReservations() {
+    // RECUPERO LE PRENOTAZIONI (SOLO QUELLE DELL'UTENTE O TUTTE SE ADMIN)
+    public List<Reservation> getReservations() {
         AppUser loggedInUser = getCurrentUser();
 
-        if (!isAdmin(loggedInUser)) {
-            throw new UnauthorizedException("Non sei autorizzato a visualizzare tutte le prenotazioni");
+        if (isAdmin(loggedInUser)) {
+            return reservationRepository.findAll();
+        } else {
+            return reservationRepository.findByUserId(loggedInUser.getId());
         }
-
-        return reservationRepository.findAll();
     }
 }

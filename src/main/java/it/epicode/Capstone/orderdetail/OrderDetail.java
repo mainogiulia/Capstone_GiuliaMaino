@@ -3,6 +3,7 @@ package it.epicode.Capstone.orderdetail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.epicode.Capstone.flavour.Flavour;
 import it.epicode.Capstone.order.Order;
+import it.epicode.Capstone.scoopquantity.ScoopQuantity;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,21 +18,12 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private int numberOfScoops;
-
-    @Column(nullable = false)
-    private int price;
+    private int totalScoops;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    @JsonIgnore //se no va in loop con Flavour
+    @JsonIgnore //per evitare il loop con Order
     private Order order;
 
-    @ManyToMany
-    @JoinTable(
-            name = "orderdetail_flavours",
-            joinColumns = @JoinColumn(name = "orderdetail_id"),
-            inverseJoinColumns = @JoinColumn(name = "flavour_id")
-    )
-    private List<Flavour> flavours = new ArrayList<>();
+    @OneToMany(mappedBy = "orderDetail", cascade = CascadeType.ALL)
+    private List<ScoopQuantity> scoopQuantities = new ArrayList<>();
 }

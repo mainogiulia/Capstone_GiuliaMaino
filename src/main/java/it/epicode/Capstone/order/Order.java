@@ -3,6 +3,7 @@ package it.epicode.Capstone.order;
 import it.epicode.Capstone.auth.AppUser;
 import it.epicode.Capstone.orderdetail.OrderDetail;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @PositiveOrZero(message = "Il totale deve essere un numero positivo")
     private int totalPrice;
 
     private LocalDate orderDate;

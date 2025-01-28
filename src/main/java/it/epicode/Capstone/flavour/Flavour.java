@@ -16,12 +16,8 @@ public class Flavour {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     private String description;
-
-    @ManyToMany(mappedBy = "flavours")
-    @JsonIgnore //se no va in loop con OrderDetail
-    private List<OrderDetail> orderDetails = new ArrayList<>();
 }

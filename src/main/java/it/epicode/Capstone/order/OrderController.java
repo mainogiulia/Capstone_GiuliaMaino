@@ -1,5 +1,7 @@
 package it.epicode.Capstone.order;
 
+import it.epicode.Capstone.exceptions.ResourceNotFoundException;
+import it.epicode.Capstone.exceptions.UserNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,10 +25,16 @@ public class OrderController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Order> createOrder(@Valid @RequestBody OrderRequest orderRequest) {
-        Order order = orderService.createOrder(orderRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(order);
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest orderRequest) {
+        try {
+            Order createdOrder = orderService.createOrder(orderRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+        } catch (UserNotFoundException | ResourceNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PutMapping("/{id}")

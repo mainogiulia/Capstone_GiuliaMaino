@@ -9,9 +9,6 @@ import java.util.List;
 
 @Data
 public class OrderRequest {
-    @NotNull(message = "L'ID dell'ordine non può essere nullo")
-    private Long id;
-
     @NotNull(message = "L'ID dell'utente non può essere nullo")
     private Long appUserId;
 
