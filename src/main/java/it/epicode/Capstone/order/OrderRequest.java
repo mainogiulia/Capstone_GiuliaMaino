@@ -18,7 +18,7 @@ public class OrderRequest {
     @NotEmpty(message = "L'ordine deve contenere almeno un dettaglio")
     private List<OrderDetailRequest> details;
 
-    @PositiveOrZero(message = "L'importo totalPricee deve essere un numero positivo")
+    @PositiveOrZero(message = "L'importo deve essere un numero positivo")
     private int totalPrice;
 
     @FutureOrPresent(message = "La data dell'ordine non può essere nel passato")

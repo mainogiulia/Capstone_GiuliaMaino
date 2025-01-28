@@ -24,6 +24,8 @@ public class OrderService {
     private final FlavourRepository flavourRepository;
     private final AppUserRepository appUserRepository;
 
+    private static final int pricePerScoop = 2;
+
     //DEFINISCO ADMIN E CURRENT USER
     private boolean isAdmin(AppUser user) {
         return user.getRoles().contains(Role.ROLE_ADMIN); // Controlla se l'utente ha il ruolo ADMIN
@@ -36,7 +38,6 @@ public class OrderService {
     }
 
     //CREO UN NUOVO ORDINE
-    private static final int pricePerScoop = 2;
 
     public Order createOrder(OrderRequest orderRequest) {
         AppUser loggedInUser = getCurrentUser();
