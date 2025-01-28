@@ -2,15 +2,14 @@ package it.epicode.Capstone.order;
 
 import it.epicode.Capstone.auth.AppUser;
 import it.epicode.Capstone.auth.AppUserRepository;
-import it.epicode.Capstone.dto.OrderItemRequest;
-import it.epicode.Capstone.dto.OrderRequest;
-import it.epicode.Capstone.entities.MenuItem;
-import it.epicode.Capstone.entities.Order;
-import it.epicode.Capstone.entities.OrderItem;
-import it.epicode.Capstone.exceptions.OrderNotFoundException;
+import it.epicode.Capstone.auth.Role;
+import it.epicode.Capstone.exceptions.ResourceNotFoundException;
 import it.epicode.Capstone.exceptions.UnauthorizedException;
 import it.epicode.Capstone.exceptions.UserNotFoundException;
-import it.epicode.Capstone.menu.MenuItemRepository;
+import it.epicode.Capstone.flavour.Flavour;
+import it.epicode.Capstone.flavour.FlavourRepository;
+import it.epicode.Capstone.orderdetail.OrderDetail;
+import it.epicode.Capstone.orderdetail.OrderDetailRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,68 +20,116 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-
-    private final AppUserRepository appUserRepository;
-    private final MenuItemRepository menuItemRepository;
     private final OrderRepository orderRepository;
+    private final FlavourRepository flavourRepository;
+    private final AppUserRepository appUserRepository;
+
+    //DEFINISCO ADMIN E CURRENT USER
+    private boolean isAdmin(AppUser user) {
+        return user.getRoles().contains(Role.ROLE_ADMIN); // Controlla se l'utente ha il ruolo ADMIN
+    }
+
+    private AppUser getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return appUserRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
+    }
+
+    //CREO UN NUOVO ORDINE
+    private static final int pricePerScoop = 2;
 
     public Order createOrder(OrderRequest orderRequest) {
-        AppUser customer = appUserRepository.findById(orderRequest.getCostumerId())
-                .orElseThrow(() -> new UserNotFoundException("Cliente non trovato con ID: " + orderRequest.getCostumerId()));
-
-        List<OrderItem> orderItems = new ArrayList<>();
-        double calculatedTotalAmount = 0;
-
-        for (OrderItemRequest itemRequest : orderRequest.getItems()) {
-            MenuItem menuItem = menuItemRepository.findById(itemRequest.getMenuItemId())
-                    .orElseThrow(() -> new RuntimeException("Menu item non trovato con ID: " + itemRequest.getMenuItemId()));
-
-            OrderItem orderItem = new OrderItem();
-            orderItem.setMenuItem(menuItem);
-            orderItem.setQuantity(itemRequest.getQuantity());
-            orderItem.setSubtotal(menuItem.getPrice() * itemRequest.getQuantity());
-
-            calculatedTotalAmount += orderItem.getSubtotal();
-
-            orderItems.add(orderItem);
-        }
-
-        if (calculatedTotalAmount != orderRequest.getTotalAmount()) {
-            throw new IllegalArgumentException("Il totale calcolato (" + calculatedTotalAmount + ") non corrisponde al totale fornito (" + orderRequest.getTotalAmount() + ")");
-        }
+        AppUser loggedInUser = getCurrentUser();
 
         Order order = new Order();
-        order.setAppUser(customer);
+        order.setAppUser(loggedInUser);
         order.setOrderDate(orderRequest.getOrderDate());
-        order.setDeliveryAddress(orderRequest.getDeliveryAddress());
-        order.setTotalAmount(calculatedTotalAmount);
-        order.setItems(orderItems);
+
+        int total = 0;
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (OrderDetailRequest detailRequest : orderRequest.getDetails()) {
+            OrderDetail detail = new OrderDetail();
+            detail.setNumberOfScoops(detailRequest.getNumberOfScoops());
+
+            List<Flavour> flavours = flavourRepository.findAllById(detailRequest.getFlavourIds());
+            if (flavours.isEmpty()) {
+                throw new IllegalArgumentException("Flavours not found for IDs: " + detailRequest.getFlavourIds());
+            }
+            detail.setFlavours(flavours);
+
+            int price = detailRequest.getNumberOfScoops() * pricePerScoop;
+            detail.setPrice(price);
+            total += price;
+
+            detail.setOrder(order);
+            orderDetails.add(detail);
+        }
+
+        order.setTotalPrice(total);
+        order.setDetails(orderDetails);
 
         return orderRepository.save(order);
     }
 
-    public List<Order> getUserOrders() {
-        // Recupera l'utente autenticato
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        AppUser user = appUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
-
-        return orderRepository.findByAppUserId(user.getId());
+    //RECUPERO TUTTI GLI ORDINI
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
     }
 
-    public Order getOrderById(Long orderId) {
-        return orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("Ordine non trovato con ID: " + orderId));
-    }
+    //MODIFICO UN ORDINE
+    public Order updateOrder(Long orderId, OrderRequest orderRequest) {
+        AppUser loggedInUser = getCurrentUser();
 
-    public void deleteOrder(Long orderId) {
-        Order order = getOrderById(orderId);
-
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!order.getAppUser().getUsername().equals(username)) {
-            throw new UnauthorizedException("Non sei autorizzato a cancellare questo ordine");
+        // Controllo se l'utente è autorizzato (admin)
+        if (!isAdmin(loggedInUser)) {
+            throw new UnauthorizedException("Non sei autorizzato ad eseguire questa operazione");
         }
 
-        orderRepository.delete(order);
+        // Recupera l'ordine esistente o lancia un'eccezione se non trovato
+        Order existingOrder = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ordine con ID " + orderId + " non trovato"));
+
+        int total = 0;
+        List<OrderDetail> orderDetails = new ArrayList<>();
+
+        for (OrderDetailRequest detailRequest : orderRequest.getDetails()) {
+            OrderDetail detail = new OrderDetail();
+            detail.setNumberOfScoops(detailRequest.getNumberOfScoops());
+
+            List<Flavour> flavours = flavourRepository.findAllById(detailRequest.getFlavourIds());
+            if (flavours.isEmpty()) {
+                throw new IllegalArgumentException("Flavours not found for IDs: " + detailRequest.getFlavourIds());
+            }
+            detail.setFlavours(flavours);
+
+            int price = detailRequest.getNumberOfScoops() * pricePerScoop;
+            detail.setPrice(price);
+            total += price;
+
+            detail.setOrder(existingOrder);
+            orderDetails.add(detail);
+        }
+
+        existingOrder.setDetails(orderDetails);
+
+        existingOrder.setTotalPrice(total);
+        existingOrder.setOrderDate(orderRequest.getOrderDate());
+
+        return orderRepository.save(existingOrder);
+    }
+
+    //ELIMINO UN ORDINE
+    public void deleteOrder(Long orderId) {
+        AppUser loggedInUser = getCurrentUser();
+
+        if (!isAdmin(loggedInUser)) {
+            throw new UnauthorizedException("Non sei autorizzato ad eseguire questa operazione");
+        }
+
+        if (!orderRepository.existsById(orderId)) {
+            throw new ResourceNotFoundException("Ordine con ID " + orderId + " non trovato");
+        }
+
+        orderRepository.deleteById(orderId);
     }
 }

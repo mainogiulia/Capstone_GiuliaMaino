@@ -1,7 +1,5 @@
 package it.epicode.Capstone.reservation;
 
-import it.epicode.Capstone.dto.ReservationRequest;
-import it.epicode.Capstone.entities.Reservation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/reservations")
+@RequestMapping("/api/reservation")
 @RequiredArgsConstructor
 public class ReservationController {
     private final ReservationService reservationService;

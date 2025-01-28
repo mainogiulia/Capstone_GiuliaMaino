@@ -1,4 +1,4 @@
-package it.epicode.Capstone.entities;
+package it.epicode.Capstone.drink;
 
 import jakarta.persistence.*;
 import lombok.Data;

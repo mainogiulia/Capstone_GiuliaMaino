@@ -3,8 +3,6 @@ package it.epicode.Capstone.reservation;
 import it.epicode.Capstone.auth.AppUser;
 import it.epicode.Capstone.auth.AppUserRepository;
 import it.epicode.Capstone.auth.Role;
-import it.epicode.Capstone.dto.ReservationRequest;
-import it.epicode.Capstone.entities.Reservation;
 import it.epicode.Capstone.exceptions.ReservationNotFoundException;
 import it.epicode.Capstone.exceptions.UnauthorizedException;
 import it.epicode.Capstone.exceptions.UserNotFoundException;
@@ -19,6 +17,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final AppUserRepository appUserRepository;
 
+    //DEFINISCO ADMIN E CURRENT USER
     private boolean isAdmin(AppUser user) {
         return user.getRoles().contains(Role.ROLE_ADMIN); // Controlla se l'utente ha il ruolo ADMIN
     }
@@ -29,6 +28,7 @@ public class ReservationService {
                 .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
     }
 
+    //CREO UNA NUOVA PRENOTAZIONE
     public Reservation createReservation(ReservationRequest reservationRequest) {
         AppUser currentUser = getCurrentUser();
 
@@ -44,6 +44,7 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    //ELIMINO UNA PRENOTAZIONE
     public void deleteReservation(Long id) {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new ReservationNotFoundException("Prenotazione non trovata"));
@@ -57,11 +58,13 @@ public class ReservationService {
         reservationRepository.delete(reservation);
     }
 
+    //RECUPERO UNA PRENOTAZIONE
     public List<Reservation> getUserReservations() {
         AppUser loggedInUser = getCurrentUser();
         return reservationRepository.findByUserId(loggedInUser.getId());
     }
 
+    //RECUPERO TUTTE LE PRENOTAZIONI (SOLO ADMIN)
     public List<Reservation> getAllReservations() {
         AppUser loggedInUser = getCurrentUser();
 

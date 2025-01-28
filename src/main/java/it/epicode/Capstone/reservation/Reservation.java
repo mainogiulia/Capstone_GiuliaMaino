@@ -1,4 +1,4 @@
-package it.epicode.Capstone.entities;
+package it.epicode.Capstone.reservation;
 
 import it.epicode.Capstone.auth.AppUser;
 import jakarta.persistence.*;
