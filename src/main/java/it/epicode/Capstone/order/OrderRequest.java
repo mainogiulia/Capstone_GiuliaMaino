@@ -20,4 +20,7 @@ public class OrderRequest {
 
     @FutureOrPresent(message = "La data dell'ordine non può essere nel passato")
     private LocalDate orderDate;
+
+    @NotEmpty(message = "L'indirizzo di consegna non può essere vuoto")
+    private String deliveryAddress;
 }

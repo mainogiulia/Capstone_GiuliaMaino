@@ -58,12 +58,6 @@ public class ReservationService {
         reservationRepository.delete(reservation);
     }
 
-    //RECUPERO UNA PRENOTAZIONE
-    public List<Reservation> getUserReservations() {
-        AppUser loggedInUser = getCurrentUser();
-        return reservationRepository.findByUserId(loggedInUser.getId());
-    }
-
     // RECUPERO LE PRENOTAZIONI (SOLO QUELLE DELL'UTENTE O TUTTE SE ADMIN)
     public List<Reservation> getReservations() {
         AppUser loggedInUser = getCurrentUser();

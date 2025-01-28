@@ -22,6 +22,8 @@ public class Order {
 
     private LocalDate orderDate;
 
+    private String deliveryAddress;
+
     @ManyToOne
     @JoinColumn(name = "app_user_id", nullable = false)
     private AppUser appUser;

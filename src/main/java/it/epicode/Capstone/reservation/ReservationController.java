@@ -14,16 +14,8 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Reservation>> getAllReservations() {
-        List<Reservation> reservations = reservationService.getAllReservations();
-        return ResponseEntity.ok(reservations);
-    }
-
-    @GetMapping("/my-reservations")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<Reservation>> getUserReservations() {
-        List<Reservation> reservations = reservationService.getUserReservations();
+    public ResponseEntity<List<Reservation>> getReservations() {
+        List<Reservation> reservations = reservationService.getReservations();
         return ResponseEntity.ok(reservations);
     }
 

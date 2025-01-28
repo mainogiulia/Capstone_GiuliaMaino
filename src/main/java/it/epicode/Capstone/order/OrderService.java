@@ -48,6 +48,7 @@ public class OrderService {
         Order order = new Order();
         order.setAppUser(appUser);
         order.setOrderDate(orderRequest.getOrderDate());
+        order.setDeliveryAddress(orderRequest.getDeliveryAddress());
 
         List<OrderDetail> orderDetails = new ArrayList<>();
         int totalScoops = 0;
@@ -105,6 +106,7 @@ public class OrderService {
         existingOrder.setAppUser(appUser);
         existingOrder.setOrderDate(orderRequest.getOrderDate());
         existingOrder.setTotalPrice(orderRequest.getTotalPrice());
+        existingOrder.setDeliveryAddress(orderRequest.getDeliveryAddress());
 
         existingOrder.getDetails().clear();
 
