@@ -1,4 +1,4 @@
-package it.epicode.Capstone.order;
+package it.epicode.Capstone.gelatoorder;
 
 import it.epicode.Capstone.exceptions.ResourceNotFoundException;
 import it.epicode.Capstone.exceptions.UserNotFoundException;
@@ -14,22 +14,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
-public class OrderController {
-    private final OrderService orderService;
+public class GelatoOrderController {
+    private final GelatoOrderService gelatoOrderService;
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderService.getAllOrders();
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<List<GelatoOrder>> getAllOrders() {
+        List<GelatoOrder> gelatoOrders = gelatoOrderService.getAllOrders();
+        return ResponseEntity.ok(gelatoOrders);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest orderRequest) {
+    public ResponseEntity<GelatoOrder> createOrder(@RequestBody GelatoOrderRequest gelatoOrderRequest) {
         try {
-            Order createdOrder = orderService.createOrder(orderRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+            GelatoOrder createdGelatoOrder = gelatoOrderService.createOrder(gelatoOrderRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdGelatoOrder);
         } catch (UserNotFoundException | ResourceNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } catch (Exception ex) {
@@ -39,15 +39,15 @@ public class OrderController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @Valid @RequestBody OrderRequest orderRequest) {
-        Order updatedOrder = orderService.updateOrder(id, orderRequest);
-        return ResponseEntity.ok(updatedOrder);
+    public ResponseEntity<GelatoOrder> updateOrder(@PathVariable Long id, @Valid @RequestBody GelatoOrderRequest gelatoOrderRequest) {
+        GelatoOrder updatedGelatoOrder = gelatoOrderService.updateOrder(id, gelatoOrderRequest);
+        return ResponseEntity.ok(updatedGelatoOrder);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
-        orderService.deleteOrder(id);
+        gelatoOrderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -2,7 +2,7 @@ package it.epicode.Capstone.scoopquantity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.epicode.Capstone.flavour.Flavour;
-import it.epicode.Capstone.orderdetail.OrderDetail;
+import it.epicode.Capstone.orderdetail.GelatoOrderDetail;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,5 +20,5 @@ public class ScoopQuantity {
 
     @ManyToOne
     @JsonIgnore //per evitare il loop con OrderDetail
-    private OrderDetail orderDetail;
+    private GelatoOrderDetail gelatoOrderDetail;
 }

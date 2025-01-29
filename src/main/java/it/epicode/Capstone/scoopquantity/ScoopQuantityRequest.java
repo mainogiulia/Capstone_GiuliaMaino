@@ -1,9 +1,6 @@
 package it.epicode.Capstone.scoopquantity;
 
-import it.epicode.Capstone.flavour.Flavour;
-import it.epicode.Capstone.orderdetail.OrderDetail;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

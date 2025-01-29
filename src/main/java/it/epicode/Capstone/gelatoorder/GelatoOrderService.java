@@ -1,4 +1,4 @@
-package it.epicode.Capstone.order;
+package it.epicode.Capstone.gelatoorder;
 
 import it.epicode.Capstone.auth.AppUser;
 import it.epicode.Capstone.auth.AppUserRepository;
@@ -8,8 +8,8 @@ import it.epicode.Capstone.exceptions.UnauthorizedException;
 import it.epicode.Capstone.exceptions.UserNotFoundException;
 import it.epicode.Capstone.flavour.Flavour;
 import it.epicode.Capstone.flavour.FlavourRepository;
-import it.epicode.Capstone.orderdetail.OrderDetail;
-import it.epicode.Capstone.orderdetail.OrderDetailRequest;
+import it.epicode.Capstone.orderdetail.GelatoOrderDetail;
+import it.epicode.Capstone.orderdetail.GelatoOrderDetailRequest;
 import it.epicode.Capstone.scoopquantity.ScoopQuantity;
 import it.epicode.Capstone.scoopquantity.ScoopQuantityRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,8 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService {
-    private final OrderRepository orderRepository;
+public class GelatoOrderService {
+    private final GelatoOrderRepository gelatoOrderRepository;
     private final FlavourRepository flavourRepository;
     private final AppUserRepository appUserRepository;
 
@@ -40,22 +40,22 @@ public class OrderService {
     }
 
     //CREO UN NUOVO ORDINE
-    public Order createOrder(OrderRequest orderRequest) {
+    public GelatoOrder createOrder(GelatoOrderRequest gelatoOrderRequest) {
 
-        AppUser appUser = appUserRepository.findById(orderRequest.getAppUserId())
+        AppUser appUser = appUserRepository.findById(gelatoOrderRequest.getAppUserId())
                 .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
 
-        Order order = new Order();
-        order.setAppUser(appUser);
-        order.setOrderDate(orderRequest.getOrderDate());
-        order.setDeliveryAddress(orderRequest.getDeliveryAddress());
+        GelatoOrder gelatoOrder = new GelatoOrder();
+        gelatoOrder.setAppUser(appUser);
+        gelatoOrder.setOrderDate(gelatoOrderRequest.getOrderDate());
+        gelatoOrder.setDeliveryAddress(gelatoOrderRequest.getDeliveryAddress());
 
-        List<OrderDetail> orderDetails = new ArrayList<>();
+        List<GelatoOrderDetail> gelatoOrderDetails = new ArrayList<>();
         int totalScoops = 0;
 
-        for (OrderDetailRequest detailRequest : orderRequest.getDetails()) {
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setTotalScoops(detailRequest.getTotalScoops());
+        for (GelatoOrderDetailRequest detailRequest : gelatoOrderRequest.getDetails()) {
+            GelatoOrderDetail gelatoOrderDetail = new GelatoOrderDetail();
+            gelatoOrderDetail.setTotalScoops(detailRequest.getTotalScoops());
 
             List<ScoopQuantity> scoopQuantities = new ArrayList<>();
             for (ScoopQuantityRequest scoopRequest : detailRequest.getScoopQuantities()) {
@@ -66,55 +66,55 @@ public class OrderService {
                         .orElseThrow(() -> new ResourceNotFoundException("Gusto non trovato con ID: " + scoopRequest.getFlavourId()));
                 scoopQuantity.setFlavour(flavour);
 
-                scoopQuantity.setOrderDetail(orderDetail);
+                scoopQuantity.setGelatoOrderDetail(gelatoOrderDetail);
                 scoopQuantities.add(scoopQuantity);
 
                 totalScoops += scoopRequest.getNumberOfScoops();
             }
-            orderDetail.setScoopQuantities(scoopQuantities);
-            orderDetail.setOrder(order);
-            orderDetails.add(orderDetail);
+            gelatoOrderDetail.setScoopQuantities(scoopQuantities);
+            gelatoOrderDetail.setGelatoOrder(gelatoOrder);
+            gelatoOrderDetails.add(gelatoOrderDetail);
         }
 
-        order.setDetails(orderDetails);
+        gelatoOrder.setDetails(gelatoOrderDetails);
 
         int totalPrice = totalScoops * 2;
-        order.setTotalPrice(totalPrice);
+        gelatoOrder.setTotalPrice(totalPrice);
 
-        return orderRepository.save(order);
+        return gelatoOrderRepository.save(gelatoOrder);
     }
 
     // RECUPERO GLI ORDINI (SOLO QUELLI DELL'UTENTE O TUTTI SE ADMIN)
-    public List<Order> getAllOrders() {
+    public List<GelatoOrder> getAllOrders() {
         AppUser currentUser = getCurrentUser();
 
         if (isAdmin(currentUser)) {
-            return orderRepository.findAll();
+            return gelatoOrderRepository.findAll();
         } else {
-            return orderRepository.findByAppUserId(currentUser.getId());
+            return gelatoOrderRepository.findByAppUserId(currentUser.getId());
         }
     }
 
     //MODIFICO UN ORDINE
-    public Order updateOrder(Long orderId, OrderRequest orderRequest) {
-        Order existingOrder = orderRepository.findById(orderId)
+    public GelatoOrder updateOrder(Long orderId, GelatoOrderRequest gelatoOrderRequest) {
+        GelatoOrder existingGelatoOrder = gelatoOrderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Ordine con ID " + orderId + " non trovato"));
 
-        AppUser appUser = appUserRepository.findById(orderRequest.getAppUserId())
+        AppUser appUser = appUserRepository.findById(gelatoOrderRequest.getAppUserId())
                 .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
 
-        existingOrder.setAppUser(appUser);
-        existingOrder.setOrderDate(orderRequest.getOrderDate());
-        existingOrder.setTotalPrice(orderRequest.getTotalPrice());
-        existingOrder.setDeliveryAddress(orderRequest.getDeliveryAddress());
+        existingGelatoOrder.setAppUser(appUser);
+        existingGelatoOrder.setOrderDate(gelatoOrderRequest.getOrderDate());
+        existingGelatoOrder.setTotalPrice(gelatoOrderRequest.getTotalPrice());
+        existingGelatoOrder.setDeliveryAddress(gelatoOrderRequest.getDeliveryAddress());
 
-        existingOrder.getDetails().clear();
+        existingGelatoOrder.getDetails().clear();
 
-        List<OrderDetail> updatedDetails = new ArrayList<>();
-        for (OrderDetailRequest detailRequest : orderRequest.getDetails()) {
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setTotalScoops(detailRequest.getTotalScoops());
-            orderDetail.setOrder(existingOrder);
+        List<GelatoOrderDetail> updatedDetails = new ArrayList<>();
+        for (GelatoOrderDetailRequest detailRequest : gelatoOrderRequest.getDetails()) {
+            GelatoOrderDetail gelatoOrderDetail = new GelatoOrderDetail();
+            gelatoOrderDetail.setTotalScoops(detailRequest.getTotalScoops());
+            gelatoOrderDetail.setGelatoOrder(existingGelatoOrder);
 
             List<ScoopQuantity> updatedScoopQuantities = new ArrayList<>();
             for (ScoopQuantityRequest scoopRequest : detailRequest.getScoopQuantities()) {
@@ -125,17 +125,17 @@ public class OrderService {
                         .orElseThrow(() -> new ResourceNotFoundException("Gusto non trovato con ID: " + scoopRequest.getFlavourId()));
                 scoopQuantity.setFlavour(flavour);
 
-                scoopQuantity.setOrderDetail(orderDetail);
+                scoopQuantity.setGelatoOrderDetail(gelatoOrderDetail);
                 updatedScoopQuantities.add(scoopQuantity);
             }
 
-            orderDetail.setScoopQuantities(updatedScoopQuantities);
-            updatedDetails.add(orderDetail);
+            gelatoOrderDetail.setScoopQuantities(updatedScoopQuantities);
+            updatedDetails.add(gelatoOrderDetail);
         }
 
-        existingOrder.setDetails(updatedDetails);
+        existingGelatoOrder.setDetails(updatedDetails);
 
-        return orderRepository.save(existingOrder);
+        return gelatoOrderRepository.save(existingGelatoOrder);
     }
 
     //ELIMINO UN ORDINE
@@ -146,10 +146,10 @@ public class OrderService {
             throw new UnauthorizedException("Non sei autorizzato ad eseguire questa operazione");
         }
 
-        if (!orderRepository.existsById(orderId)) {
+        if (!gelatoOrderRepository.existsById(orderId)) {
             throw new ResourceNotFoundException("Ordine con ID " + orderId + " non trovato");
         }
 
-        orderRepository.deleteById(orderId);
+        gelatoOrderRepository.deleteById(orderId);
     }
 }

@@ -1,7 +1,7 @@
-package it.epicode.Capstone.order;
+package it.epicode.Capstone.gelatoorder;
 
 import it.epicode.Capstone.auth.AppUser;
-import it.epicode.Capstone.orderdetail.OrderDetail;
+import it.epicode.Capstone.orderdetail.GelatoOrderDetail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "orders")
-public class Order {
+public class GelatoOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -28,6 +28,6 @@ public class Order {
     @JoinColumn(name = "app_user_id", nullable = false)
     private AppUser appUser;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderDetail> details = new ArrayList<>();
+    @OneToMany(mappedBy = "gelatoOrder", cascade = CascadeType.ALL)
+    private List<GelatoOrderDetail> details = new ArrayList<>();
 }

@@ -1,12 +1,7 @@
 package it.epicode.Capstone.flavour;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.epicode.Capstone.orderdetail.OrderDetail;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity
