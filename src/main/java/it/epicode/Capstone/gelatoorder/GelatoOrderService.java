@@ -5,7 +5,6 @@ import it.epicode.Capstone.auth.AppUserRepository;
 import it.epicode.Capstone.auth.Role;
 import it.epicode.Capstone.exceptions.ResourceNotFoundException;
 import it.epicode.Capstone.exceptions.UnauthorizedException;
-import it.epicode.Capstone.exceptions.UserNotFoundException;
 import it.epicode.Capstone.flavour.Flavour;
 import it.epicode.Capstone.flavour.FlavourRepository;
 import it.epicode.Capstone.orderdetail.GelatoOrderDetail;
@@ -36,14 +35,14 @@ public class GelatoOrderService {
     private AppUser getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return appUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
     }
 
     //CREO UN NUOVO ORDINE
     public GelatoOrder createOrder(GelatoOrderRequest gelatoOrderRequest) {
 
         AppUser appUser = appUserRepository.findById(gelatoOrderRequest.getAppUserId())
-                .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
 
         GelatoOrder gelatoOrder = new GelatoOrder();
         gelatoOrder.setAppUser(appUser);
@@ -101,7 +100,7 @@ public class GelatoOrderService {
                 .orElseThrow(() -> new ResourceNotFoundException("Ordine con ID " + orderId + " non trovato"));
 
         AppUser appUser = appUserRepository.findById(gelatoOrderRequest.getAppUserId())
-                .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
 
         existingGelatoOrder.setAppUser(appUser);
         existingGelatoOrder.setOrderDate(gelatoOrderRequest.getOrderDate());

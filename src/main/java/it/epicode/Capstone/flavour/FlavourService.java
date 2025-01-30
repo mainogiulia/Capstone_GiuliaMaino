@@ -5,7 +5,6 @@ import it.epicode.Capstone.auth.AppUserRepository;
 import it.epicode.Capstone.auth.Role;
 import it.epicode.Capstone.exceptions.ResourceNotFoundException;
 import it.epicode.Capstone.exceptions.UnauthorizedException;
-import it.epicode.Capstone.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class FlavourService {
     private AppUser getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return appUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
     }
 
     //RECUPERO TUTTI I GUSTI

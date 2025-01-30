@@ -3,9 +3,8 @@ package it.epicode.Capstone.reservation;
 import it.epicode.Capstone.auth.AppUser;
 import it.epicode.Capstone.auth.AppUserRepository;
 import it.epicode.Capstone.auth.Role;
-import it.epicode.Capstone.exceptions.ReservationNotFoundException;
+import it.epicode.Capstone.exceptions.ResourceNotFoundException;
 import it.epicode.Capstone.exceptions.UnauthorizedException;
-import it.epicode.Capstone.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class ReservationService {
     private AppUser getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return appUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
     }
 
     //CREO UNA NUOVA PRENOTAZIONE
@@ -47,7 +46,7 @@ public class ReservationService {
     //ELIMINO UNA PRENOTAZIONE
     public void deleteReservation(Long id) {
         Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(() -> new ReservationNotFoundException("Prenotazione non trovata"));
+                .orElseThrow(() -> new ResourceNotFoundException("Prenotazione non trovata"));
 
         AppUser loggedInUser = getCurrentUser();
 
