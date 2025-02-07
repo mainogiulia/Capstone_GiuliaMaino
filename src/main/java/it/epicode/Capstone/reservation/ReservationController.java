@@ -14,21 +14,27 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Reservation>> getReservations() {
         List<Reservation> reservations = reservationService.getReservations();
         return ResponseEntity.ok(reservations);
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Reservation> createReservation(@RequestBody ReservationRequest reservationRequest) {
         return new ResponseEntity<>(reservationService.createReservation(reservationRequest), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
         reservationService.deleteReservation(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/cancel")
+    public ResponseEntity<Void> cancelReservation(@RequestBody ReservationRequest reservationRequest) {
+        reservationService.cancelReservation(reservationRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

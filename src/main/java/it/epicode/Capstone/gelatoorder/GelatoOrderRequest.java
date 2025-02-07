@@ -23,4 +23,11 @@ public class GelatoOrderRequest {
 
     @NotEmpty(message = "L'indirizzo di consegna non può essere vuoto")
     private String deliveryAddress;
+
+    @NotBlank(message = "Il nome del cliente non può essere vuoto")
+    private String costumerName;
+
+    @NotBlank(message = "L'email non può essere vuota")
+    @Email(message = "Inserire un indirizzo email valido")
+    private String email;
 }

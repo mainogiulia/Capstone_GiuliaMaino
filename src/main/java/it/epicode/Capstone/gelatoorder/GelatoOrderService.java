@@ -12,9 +12,13 @@ import it.epicode.Capstone.orderdetail.GelatoOrderDetailRequest;
 import it.epicode.Capstone.scoopquantity.ScoopQuantity;
 import it.epicode.Capstone.scoopquantity.ScoopQuantityRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,7 @@ public class GelatoOrderService {
     private final GelatoOrderRepository gelatoOrderRepository;
     private final FlavourRepository flavourRepository;
     private final AppUserRepository appUserRepository;
+    private final JavaMailSender mailSender; // SERVE PER INVIARE L'EMAIL
 
     private static final int pricePerScoop = 2;
 
@@ -41,11 +46,9 @@ public class GelatoOrderService {
     //CREO UN NUOVO ORDINE
     public GelatoOrder createOrder(GelatoOrderRequest gelatoOrderRequest) {
 
-        AppUser appUser = appUserRepository.findById(gelatoOrderRequest.getAppUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
-
         GelatoOrder gelatoOrder = new GelatoOrder();
-        gelatoOrder.setAppUser(appUser);
+        gelatoOrder.setCustomerName(gelatoOrderRequest.getCostumerName()); // IMPOSTA IL NOME INSERITO DALL'UTENTE
+        gelatoOrder.setEmail(gelatoOrderRequest.getEmail()); // IMPOSTA L'EMAIL INSERITA DALL'UTENTE
         gelatoOrder.setOrderDate(gelatoOrderRequest.getOrderDate());
         gelatoOrder.setDeliveryAddress(gelatoOrderRequest.getDeliveryAddress());
 
@@ -80,75 +83,37 @@ public class GelatoOrderService {
         int totalPrice = totalScoops * 2;
         gelatoOrder.setTotalPrice(totalPrice);
 
+        sendConfirmationEmail(gelatoOrderRequest.getCostumerName(), gelatoOrderRequest.getEmail(), gelatoOrderRequest.getDeliveryAddress());
+
         return gelatoOrderRepository.save(gelatoOrder);
     }
 
-    // RECUPERO GLI ORDINI (SOLO QUELLI DELL'UTENTE O TUTTI SE ADMIN)
+    private void sendConfirmationEmail(String customerName, String email, String deliveryAddress){
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Conferma Ordine");
+        message.setText("Gentile " + customerName + ",\n"
+                + "La informiamo che il suo ordine è stato confermato e sarà recapitato all'indirizzo seguente: " + deliveryAddress + ".\n"
+                + "Le ricordiamo che, qualora decidesse di cancellare l'ordine, potrà farlo entro il termine indicato nei nostri termini e condizioni.\n"
+                + "Per qualsiasi ulteriore richiesta o chiarimento, non esiti a contattarci. Saremo felici di assisterla.\n"
+                + "La ringraziamo per aver scelto il nostro servizio e restiamo a sua disposizione.\n" +
+                "\n" +
+                "Cordiali saluti,\n" +
+                "PUB\n" + //DEVI SCEGLIERE IL NOMEEEEEEE
+                "numero di telefono, indirizzo, ecc.."); //E COMPILA I CONTATTI
+
+        mailSender.send(message);
+    }
+
+    // RECUPERO GLI ORDINI (SOLO SE ADMIN)
     public List<GelatoOrder> getAllOrders() {
         AppUser currentUser = getCurrentUser();
 
-        if (isAdmin(currentUser)) {
-            return gelatoOrderRepository.findAll();
-        } else {
-            return gelatoOrderRepository.findByAppUserId(currentUser.getId());
-        }
-    }
-
-    //MODIFICO UN ORDINE
-    public GelatoOrder updateOrder(Long orderId, GelatoOrderRequest gelatoOrderRequest) {
-        GelatoOrder existingGelatoOrder = gelatoOrderRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Ordine con ID " + orderId + " non trovato"));
-
-        AppUser appUser = appUserRepository.findById(gelatoOrderRequest.getAppUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
-
-        existingGelatoOrder.setAppUser(appUser);
-        existingGelatoOrder.setOrderDate(gelatoOrderRequest.getOrderDate());
-        existingGelatoOrder.setTotalPrice(gelatoOrderRequest.getTotalPrice());
-        existingGelatoOrder.setDeliveryAddress(gelatoOrderRequest.getDeliveryAddress());
-
-        existingGelatoOrder.getDetails().clear();
-
-        List<GelatoOrderDetail> updatedDetails = new ArrayList<>();
-        for (GelatoOrderDetailRequest detailRequest : gelatoOrderRequest.getDetails()) {
-            GelatoOrderDetail gelatoOrderDetail = new GelatoOrderDetail();
-            gelatoOrderDetail.setTotalScoops(detailRequest.getTotalScoops());
-            gelatoOrderDetail.setGelatoOrder(existingGelatoOrder);
-
-            List<ScoopQuantity> updatedScoopQuantities = new ArrayList<>();
-            for (ScoopQuantityRequest scoopRequest : detailRequest.getScoopQuantities()) {
-                ScoopQuantity scoopQuantity = new ScoopQuantity();
-                scoopQuantity.setNumberOfScoops(scoopRequest.getNumberOfScoops());
-
-                Flavour flavour = flavourRepository.findById(scoopRequest.getFlavourId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Gusto non trovato con ID: " + scoopRequest.getFlavourId()));
-                scoopQuantity.setFlavour(flavour);
-
-                scoopQuantity.setGelatoOrderDetail(gelatoOrderDetail);
-                updatedScoopQuantities.add(scoopQuantity);
-            }
-
-            gelatoOrderDetail.setScoopQuantities(updatedScoopQuantities);
-            updatedDetails.add(gelatoOrderDetail);
+        if (!isAdmin(currentUser)) {
+            throw new UnauthorizedException("Accesso negato: solo gli amministratori possono visualizzare tutti gli ordini.");
         }
 
-        existingGelatoOrder.setDetails(updatedDetails);
-
-        return gelatoOrderRepository.save(existingGelatoOrder);
-    }
-
-    //ELIMINO UN ORDINE
-    public void deleteOrder(Long orderId) {
-        AppUser loggedInUser = getCurrentUser();
-
-        if (!isAdmin(loggedInUser)) {
-            throw new UnauthorizedException("Non sei autorizzato ad eseguire questa operazione");
-        }
-
-        if (!gelatoOrderRepository.existsById(orderId)) {
-            throw new ResourceNotFoundException("Ordine con ID " + orderId + " non trovato");
-        }
-
-        gelatoOrderRepository.deleteById(orderId);
+        return gelatoOrderRepository.findAll();
     }
 }

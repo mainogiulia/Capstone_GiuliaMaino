@@ -1,9 +1,7 @@
 package it.epicode.Capstone.reservation;
 
-import it.epicode.Capstone.auth.AppUser;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @Data
@@ -20,7 +18,12 @@ public class Reservation {
     @Column(nullable = false)
     private int numberOfGuests;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private AppUser user;
+    @Column(nullable = false)
+    private String customerName;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false, unique = true)
+    private String cancellationCode;
 }

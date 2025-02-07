@@ -24,9 +24,11 @@ public class GelatoOrder {
 
     private String deliveryAddress;
 
-    @ManyToOne
-    @JoinColumn(name = "app_user_id", nullable = false)
-    private AppUser appUser;
+    @Column(nullable = false)
+    private String customerName;
+
+    @Column(nullable = false)
+    private String email;
 
     @OneToMany(mappedBy = "gelatoOrder", cascade = CascadeType.ALL)
     private List<GelatoOrderDetail> details = new ArrayList<>();

@@ -1,8 +1,7 @@
 package it.epicode.Capstone.reservation;
 
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import java.time.LocalDateTime;
 
@@ -15,6 +14,13 @@ public class ReservationRequest {
     @Min(value = 1, message = "Il numero di ospiti deve essere almeno 1")
     private int numberOfGuests;
 
-    @NotNull(message = "L'Id del cliente non può essere vuoto")
-    private Long costumerId;
+    @NotBlank(message = "Il nome del cliente non può essere vuoto")
+    private String costumerName;
+
+    @NotBlank(message = "L'email non può essere vuota")
+    @Email(message = "Inserire un indirizzo email valido")
+    private String email;
+
+    @NotBlank(message = "Il codice di cancellazione non può essere vuoto")
+    private String cancellationCode;
 }

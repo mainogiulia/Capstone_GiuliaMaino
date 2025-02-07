@@ -28,17 +28,5 @@ public class AuthRunner implements ApplicationRunner {
                     "admin@example.com"  // Email
             );
         }
-
-        Optional<AppUser> normalUser = appUserService.findByUsername("user");
-        if (normalUser.isEmpty()) {
-            appUserService.registerUser(
-                    "user",
-                    "userpwd",
-                    Set.of(Role.ROLE_USER),
-                    "User", // Nome
-                    "User",   // Cognome
-                    "user@example.com"  // Email
-            );
-        }
     }
 }
