@@ -41,7 +41,7 @@ public class QuizService {
 
     private QuestionRequest convertToRequest(Question question) {
         List<AnswerRequest> answerRequests = question.getAnswers().stream()
-                .map(a -> new AnswerRequest(a.getText())) // MAP TRASFORMA OGNI OGGETTO DELLO STREAM. POI PER OGNI OGGETTO Answer(A) VIENE CREATO UN NUOVO AnswerRequest CHE CONTIENE SOLO IL TESTO DELLA RISPOSTA
+                .map(a -> new AnswerRequest(a.getId(), a.getText())) // MAP TRASFORMA OGNI OGGETTO DELLO STREAM. POI PER OGNI OGGETTO Answer(A) VIENE CREATO UN NUOVO AnswerRequest CHE CONTIENE SOLO IL TESTO DELLA RISPOSTA
                 .collect(Collectors.toList()); // CONVERTE LO Stream<AnswerRequest> IN UNA List<AnswerRequest>.
 
         return new QuestionRequest(question.getText(), answerRequests); // CREIAMO UN OGGETTO QuestionRequest PASSANDO IL TESTO DELLA DOMANDA E LA LISTA DI RISPOSTE CONVERTITE

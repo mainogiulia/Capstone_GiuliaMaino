@@ -22,7 +22,7 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // Domanda 1 (iniziale)
         Question q1 = new Question();
-        q1.setText("Preferisci caldo o freddo?");
+        q1.setText("Caldo o freddo?");
         questionRepository.save(q1);
 
 // Domanda 2A (se l'utente sceglie CALDO)

@@ -18,7 +18,7 @@ public class ReservationService {
 
     //DEFINISCO ADMIN E CURRENT USER
     private boolean isAdmin(AppUser user) {
-        return user.getRoles().contains(Role.ROLE_ADMIN); // Controlla se l'utente ha il ruolo ADMIN
+        return user.getRoles().contains(Role.ROLE_ADMIN); // CONTROLLA SE L'UTENTE HA IL RUOLO ADMIN
     }
 
     private AppUser getCurrentUser() {
@@ -36,7 +36,7 @@ public class ReservationService {
         }
 
         Reservation reservation = new Reservation();
-        reservation.setUser(currentUser); // Imposta l'utente collegato
+        reservation.setUser(currentUser); // IMPOSTA L'UTENTE COLLEGATO
         reservation.setReservationDate(reservationRequest.getReservationDate());
         reservation.setNumberOfGuests(reservationRequest.getNumberOfGuests());
 
