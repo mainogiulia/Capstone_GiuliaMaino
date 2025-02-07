@@ -40,7 +40,7 @@ public class ReservationService {
         String cancellationCode = UUID.randomUUID().toString(); //GENERA IL CODICE UNIVOCO PER LA CANCELLAZIONE
 
         Reservation reservation = new Reservation();
-        reservation.setCustomerName(reservationRequest.getCostumerName()); // IMPOSTA IL NOME INSERITO DALL'UTENTE
+        reservation.setCustomerName(reservationRequest.getCustomerName()); // IMPOSTA IL NOME INSERITO DALL'UTENTE
         reservation.setEmail(reservationRequest.getEmail()); // IMPOSTA L'EMAIL INSERITA DALL'UTENTE
         reservation.setReservationDate(reservationRequest.getReservationDate());
         reservation.setNumberOfGuests(reservationRequest.getNumberOfGuests());
@@ -49,7 +49,7 @@ public class ReservationService {
         reservation = reservationRepository.save(reservation);
 
         //INVIA L'EMAIL CON IL CODICE
-        sendCancellationCodeEmail(reservationRequest.getCostumerName(), reservationRequest.getEmail(), cancellationCode, reservationRequest.getReservationDate());
+        sendCancellationCodeEmail(reservationRequest.getCustomerName(), reservationRequest.getEmail(), cancellationCode, reservationRequest.getReservationDate());
 
         return reservation;
     }
@@ -92,7 +92,7 @@ public class ReservationService {
     //DISDICO UNA PRENOTAZIONE DA CLIENTE CON CODICE
     public void cancelReservation(ReservationRequest reservationRequest) {
         Reservation reservation = reservationRepository.findByCustomerNameAndCancellationCode(
-                reservationRequest.getCostumerName(), reservationRequest.getCancellationCode()
+                reservationRequest.getCustomerName(), reservationRequest.getCancellationCode()
         ).orElseThrow(() -> new ResourceNotFoundException("Prenotazione non trovata o codice errato"));
 
         reservationRepository.delete(reservation);

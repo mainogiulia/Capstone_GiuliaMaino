@@ -9,8 +9,6 @@ import java.util.List;
 
 @Data
 public class GelatoOrderRequest {
-    @NotNull(message = "L'ID dell'utente non può essere nullo")
-    private Long appUserId;
 
     @NotEmpty(message = "L'ordine deve contenere almeno un dettaglio")
     private List<GelatoOrderDetailRequest> details;

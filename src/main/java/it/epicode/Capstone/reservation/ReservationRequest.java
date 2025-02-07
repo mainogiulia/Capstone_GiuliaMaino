@@ -15,7 +15,7 @@ public class ReservationRequest {
     private int numberOfGuests;
 
     @NotBlank(message = "Il nome del cliente non può essere vuoto")
-    private String costumerName;
+    private String customerName;
 
     @NotBlank(message = "L'email non può essere vuota")
     @Email(message = "Inserire un indirizzo email valido")
