@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/flavour")
+@RequestMapping("/api/flavour")
 @RequiredArgsConstructor
 public class FlavourController {
     private final FlavourService flavourService;
 
     @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<List<Flavour>> getAllFlavours() {
         List<Flavour> flavours = flavourService.getAllFlavours();
         return ResponseEntity.ok(flavours);

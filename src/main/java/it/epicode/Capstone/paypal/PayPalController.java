@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Collections;
 
 @RestController
@@ -32,7 +33,14 @@ public class PayPalController {
         request.requestBody(buildRequestBody());
 
         try {
+            System.out.println("Request body per PayPal: " + request);
             Order order = payPalClient.execute(request).result();
+            if (order == null) {
+                throw new RuntimeException("Nessuna risposta dall'API PayPal");
+            }
+            System.out.println("Ordine creato con successo: " + order.id());
+
+            order.links().forEach(link -> System.out.println("Link: " + link.href()));
 
             String approvalUrl = order.links().stream()
                     .filter(link -> "approve".equals(link.rel()))
@@ -43,7 +51,9 @@ public class PayPalController {
             return approvalUrl; //URL DA INVIARE AL FRONTEND
 
         } catch (Exception e) {
-            return e.getMessage();
+            System.err.println("Errore generico: " + e.getMessage());
+            e.printStackTrace();
+            return "Errore generico: " + e.getMessage();
         }
     }
 
