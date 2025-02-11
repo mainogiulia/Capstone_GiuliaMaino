@@ -11,7 +11,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
@@ -43,26 +45,27 @@ public class ReservationService {
         reservation.setCustomerName(reservationRequest.getCustomerName()); // IMPOSTA IL NOME INSERITO DALL'UTENTE
         reservation.setEmail(reservationRequest.getEmail()); // IMPOSTA L'EMAIL INSERITA DALL'UTENTE
         reservation.setReservationDate(reservationRequest.getReservationDate());
+        reservation.setReservationTime(reservationRequest.getReservationTime());
         reservation.setNumberOfGuests(reservationRequest.getNumberOfGuests());
         reservation.setCancellationCode(cancellationCode);
 
         reservation = reservationRepository.save(reservation);
 
         //INVIA L'EMAIL CON IL CODICE
-        sendCancellationCodeEmail(reservationRequest.getCustomerName(), reservationRequest.getEmail(), cancellationCode, reservationRequest.getReservationDate());
+        sendCancellationCodeEmail(reservationRequest.getCustomerName(), reservationRequest.getEmail(), cancellationCode, reservationRequest.getReservationDate(), reservationRequest.getReservationTime());
 
         return reservation;
     }
 
-    private void sendCancellationCodeEmail(String customerName, String email, String cancellationCode, LocalDateTime reservationDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");//TRASFORMA LA DATA NEL FORMATO GG/MM/AAAA e HH:MM
+    private void sendCancellationCodeEmail(String customerName, String email, String cancellationCode, LocalDate reservationDate, LocalTime reservationTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //TRASFORMA LA DATA NEL FORMATO GG/MM/AAAA
         String formattedDate = reservationDate.format(formatter);
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Conferma Prenotazione");
         message.setText("Gentile " + customerName + ",\n"
-                + "La informiamo che la sua prenotazione è stata confermata per il giorno " + formattedDate.replace(" ", " alle ore ") + ".\n"
+                + "La informiamo che la sua prenotazione è stata confermata per il giorno " + formattedDate + " alle ore " + reservationTime + ".\n"
                 + "Per eventuali cancellazioni, può utilizzare il seguente codice: " + cancellationCode + "\n"
                 + "Le ricordiamo che, qualora decidesse di cancellare la prenotazione, potrà farlo entro il termine indicato nei nostri termini e condizioni.\n"
                 + "Per qualsiasi ulteriore richiesta o chiarimento, non esiti a contattarci. Saremo felici di assisterla.\n"

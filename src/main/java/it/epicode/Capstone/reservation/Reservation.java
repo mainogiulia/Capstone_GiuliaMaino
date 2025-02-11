@@ -2,7 +2,8 @@ package it.epicode.Capstone.reservation;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -13,7 +14,10 @@ public class Reservation {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime reservationDate;
+    private LocalDate reservationDate;
+
+    @Column(nullable = false)
+    private LocalTime reservationTime;
 
     @Column(nullable = false)
     private int numberOfGuests;

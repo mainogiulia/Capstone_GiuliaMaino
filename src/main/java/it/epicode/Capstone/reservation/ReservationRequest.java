@@ -1,15 +1,19 @@
 package it.epicode.Capstone.reservation;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 public class ReservationRequest {
     @NotNull(message = "La data della prenotazione non può essere vuota")
     @FutureOrPresent(message = "La data della prenotazione non può essere nel passato")
-    private LocalDateTime reservationDate;
+    private LocalDate reservationDate;
+
+    @NotNull(message = "L'orario della prenotazione non può essere vuoto")
+    @FutureOrPresent(message = "L'orario' della prenotazione non può essere nel passato")
+    private LocalTime reservationTime;
 
     @Min(value = 1, message = "Il numero di ospiti deve essere almeno 1")
     private int numberOfGuests;
