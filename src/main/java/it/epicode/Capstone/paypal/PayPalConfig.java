@@ -22,7 +22,6 @@ public class PayPalConfig {
 
     @Bean
     public PayPalEnvironment payPalEnvironment() {
-        System.out.println("Configurazione PayPal: " + clientId + " | " + clientSecret);
         return new PayPalEnvironment.Sandbox(clientId, clientSecret);
     }
 

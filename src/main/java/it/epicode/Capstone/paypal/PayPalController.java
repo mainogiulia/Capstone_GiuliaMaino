@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,18 +33,15 @@ public class PayPalController {
     private String cancelUrl;
 
     @PostMapping("/createOrder")
-    public ResponseEntity<Map<String, String>> createOrder() {
-        System.out.println("Richiesta ricevuta per creare un ordine PayPal");
+    public ResponseEntity<Map<String, String>> createOrder(@RequestParam int totalScoops) {
 
         // CREAZIONE ORDINE PAYPAL
         OrdersCreateRequest request = new OrdersCreateRequest();
-        request.requestBody(buildRequestBody());
+        request.requestBody(buildRequestBody(totalScoops));
 
         try {
             // ESECUZIONE DELLA RICHIESTA PER CREARE L'ORDINE
             Order order = payPalClient.execute(request).result();
-
-            System.out.println("Risposta di PayPal: " + order);
 
             // ESTRAZIONE DEL LINK DI APPROVAZIONE DI PAYPAL
             String approvalUrl = order.links().stream()
@@ -54,22 +52,22 @@ public class PayPalController {
 
             // CREAZIONE DELLA MAPPA PER RESTITUIRE L'URL COME JSON
             Map<String, String> response = new HashMap<>();
-            response.put("approvalUrl", "https://www.sandbox.paypal.com/checkoutnow?token=0PH93964XV355061V");
+            response.put("approvalUrl", approvalUrl);
 
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
-            System.err.println("Errore durante la creazione dell'ordine: " + e.getMessage());
             e.printStackTrace(); // STAMPA TUTTO L'ERRORE
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "Errore PayPal: " + e.getMessage());
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);}
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
 
-    private OrderRequest buildRequestBody() {
-        System.out.println("URL di ritorno: " + returnUrl);
-        System.out.println("URL di annullamento: " + cancelUrl);
+    private OrderRequest buildRequestBody(int totalScoops) {
+        BigDecimal totalAmount = BigDecimal.valueOf(totalScoops * 2.00);
+        String formattedAmount = totalAmount.setScale(2, RoundingMode.HALF_UP).toPlainString(); // Forza due decimali
 
         OrderRequest orderRequest = new OrderRequest();
         orderRequest.checkoutPaymentIntent("CAPTURE");
@@ -82,7 +80,7 @@ public class PayPalController {
 
         AmountWithBreakdown amount = new AmountWithBreakdown()
                 .currencyCode("EUR")
-                .value("10.00");
+                .value(formattedAmount);
 
         PurchaseUnitRequest purchaseUnit = new PurchaseUnitRequest()
                 .amountWithBreakdown(amount);
@@ -95,21 +93,28 @@ public class PayPalController {
 
     // ENDPOINT PER CATTURARE IL PAGAMENTO E FINALIZZARE LA TANSAZIONE
     @PostMapping("/captureOrder")
-    public String captureOrder(@RequestParam String token) {
-        System.out.println("Richiesta di cattura per l'ordine PayPal: " + token);
-
-        OrdersCaptureRequest request = new OrdersCaptureRequest(token);
+    public ResponseEntity<Map<String, String>> captureOrder(@RequestParam String token) {
+        Map<String, String> response = new HashMap<>();
 
         try {
+            OrdersCaptureRequest request = new OrdersCaptureRequest(token);
             Order order = payPalClient.execute(request).result();
 
             if ("COMPLETED".equals(order.status())) {
-                return "Pagamento completato con successo! ID Transazione: " + order.id();
+                response.put("status", "success");
+                response.put("transactionId", order.id());
+                response.put("message", "Pagamento completato con successo!");
+                return ResponseEntity.ok(response);  // ✅ Ritorna un oggetto JSON
             } else {
-                return "Pagamento non completato. Stato: " + order.status();
+                response.put("status", "failure");
+                response.put("message", "Pagamento non completato. Stato: " + order.status());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
         } catch (Exception e) {
-            return e.getMessage();
+            System.err.println("Errore durante la cattura del pagamento: " + e.getMessage());
+            response.put("status", "error");
+            response.put("message", "Errore nella cattura del pagamento: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 }
