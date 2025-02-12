@@ -5,15 +5,21 @@ import com.paypal.orders.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/paypal")
 public class PayPalController {
 
     @Autowired
@@ -26,83 +32,60 @@ public class PayPalController {
     private String cancelUrl;
 
     @PostMapping("/createOrder")
-    public String createOrder() {
+    public ResponseEntity<Map<String, String>> createOrder() {
         System.out.println("Richiesta ricevuta per creare un ordine PayPal");
 
+        // CREAZIONE ORDINE PAYPAL
         OrdersCreateRequest request = new OrdersCreateRequest();
         request.requestBody(buildRequestBody());
 
         try {
-            System.out.println("Request body per PayPal: " + request);
+            // ESECUZIONE DELLA RICHIESTA PER CREARE L'ORDINE
             Order order = payPalClient.execute(request).result();
-            if (order == null) {
-                throw new RuntimeException("Nessuna risposta dall'API PayPal");
-            }
-            System.out.println("Ordine creato con successo: " + order.id());
 
-            order.links().forEach(link -> System.out.println("Link: " + link.href()));
+            System.out.println("Risposta di PayPal: " + order);
 
+            // ESTRAZIONE DEL LINK DI APPROVAZIONE DI PAYPAL
             String approvalUrl = order.links().stream()
                     .filter(link -> "approve".equals(link.rel()))
                     .findFirst()
                     .map(LinkDescription::href)
                     .orElseThrow(() -> new RuntimeException("Nessun link di approvazione trovato"));
 
-            return approvalUrl; //URL DA INVIARE AL FRONTEND
+            // CREAZIONE DELLA MAPPA PER RESTITUIRE L'URL COME JSON
+            Map<String, String> response = new HashMap<>();
+            response.put("approvalUrl", "https://www.sandbox.paypal.com/checkoutnow?token=0PH93964XV355061V");
+
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
-            System.err.println("Errore generico: " + e.getMessage());
-            e.printStackTrace();
-            return "Errore generico: " + e.getMessage();
-        }
+            System.err.println("Errore durante la creazione dell'ordine: " + e.getMessage());
+            e.printStackTrace(); // STAMPA TUTTO L'ERRORE
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Errore PayPal: " + e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);}
     }
 
-    // curl.exe -X POST http://localhost:8080/createOrder ----> COMANDO PER TERMINALE DI CREATE ORDER
-
-    /*@PostMapping("/createOrder")
-    public String createOrder() {
-        System.out.println("Richiesta ricevuta per creare un ordine PayPal");
-
-        OrdersCreateRequest request = new OrdersCreateRequest();
-        request.requestBody(buildRequestBody());
-
-        try {
-            Order order = payPalClient.execute(request).result();
-            return order.id();
-        } catch (Exception e) {
-            return e.getMessage();
-        }
-    }*/
-
-    /*@PostMapping("/createOrder")
-    public String createOrder() {
-        OrdersCreateRequest request = new OrdersCreateRequest();
-        request.requestBody(buildRequestBody());
-
-        try {
-            Order order = payPalClient.execute(request).result();
-            return order.id();
-        } catch (Exception e) {
-            return e.getMessage();
-        }
-    }*/
-
     private OrderRequest buildRequestBody() {
+        System.out.println("URL di ritorno: " + returnUrl);
+        System.out.println("URL di annullamento: " + cancelUrl);
+
         OrderRequest orderRequest = new OrderRequest();
-        orderRequest.checkoutPaymentIntent("CAPTURE"); // Usa il metodo corretto
+        orderRequest.checkoutPaymentIntent("CAPTURE");
 
         ApplicationContext applicationContext = new ApplicationContext()
-                .brandName("YourBrandName")
+                .brandName("Pertilia")
                 .landingPage("BILLING")
                 .cancelUrl(cancelUrl)
                 .returnUrl(returnUrl);
 
         AmountWithBreakdown amount = new AmountWithBreakdown()
-                .currencyCode("USD")
-                .value("100.00");
+                .currencyCode("EUR")
+                .value("10.00");
 
         PurchaseUnitRequest purchaseUnit = new PurchaseUnitRequest()
-                .amountWithBreakdown(amount); // Metodo corretto
+                .amountWithBreakdown(amount);
 
         orderRequest.applicationContext(applicationContext);
         orderRequest.purchaseUnits(Collections.singletonList(purchaseUnit));

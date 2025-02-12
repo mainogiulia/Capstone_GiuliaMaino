@@ -16,63 +16,63 @@ public class GelatoFlavoursRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (flavourRepository.count() == 0) {
             Flavour vanilla = new Flavour();
-            vanilla.setName("Vaniglia");  // Impostato il nome
+            vanilla.setName("Vaniglia");
             vanilla.setDescription("Gusto classico e cremoso.");
 
             Flavour chocolate = new Flavour();
-            chocolate.setName("Cioccolato");  // Impostato il nome
+            chocolate.setName("Cioccolato");
             chocolate.setDescription("Delizioso cioccolato fondente.");
 
             Flavour strawberry = new Flavour();
-            strawberry.setName("Fragola");  // Impostato il nome
+            strawberry.setName("Fragola");
             strawberry.setDescription("Gusto fresco e fruttato.");
 
             Flavour pistachio = new Flavour();
-            pistachio.setName("Pistacchio");  // Impostato il nome
+            pistachio.setName("Pistacchio");
             pistachio.setDescription("Un sapore intenso di pistacchio.");
 
             Flavour lemon = new Flavour();
-            lemon.setName("Limone");  // Impostato il nome
+            lemon.setName("Limone");
             lemon.setDescription("Fresco e leggero, perfetto per l'estate.");
 
             Flavour mint = new Flavour();
-            mint.setName("Menta");  // Impostato il nome
+            mint.setName("Menta");
             mint.setDescription("Un fresco sapore di menta.");
 
             Flavour caramel = new Flavour();
-            caramel.setName("Caramello");  // Impostato il nome
+            caramel.setName("Caramello");
             caramel.setDescription("Ricco e dolce gusto al caramello.");
 
             Flavour coconut = new Flavour();
-            coconut.setName("Cocco");  // Impostato il nome
+            coconut.setName("Cocco");
             coconut.setDescription("Un gusto esotico di cocco fresco.");
 
             Flavour hazelnut = new Flavour();
-            hazelnut.setName("Nocciola");  // Impostato il nome
+            hazelnut.setName("Nocciola");
             hazelnut.setDescription("Gusto ricco e cremoso di nocciola.");
 
             Flavour coffee = new Flavour();
-            coffee.setName("Caffè");  // Impostato il nome
+            coffee.setName("Caffè");
             coffee.setDescription("Sapore intenso di caffè espresso.");
 
             Flavour tiramisu = new Flavour();
-            tiramisu.setName("Tiramisù");  // Impostato il nome
+            tiramisu.setName("Tiramisù");
             tiramisu.setDescription("Gusto ispirato al famoso dolce italiano.");
 
             Flavour raspberry = new Flavour();
-            raspberry.setName("Lampone");  // Impostato il nome
+            raspberry.setName("Lampone");
             raspberry.setDescription("Dolce e perfetto per l'estate.");
 
             Flavour blueberry = new Flavour();
-            blueberry.setName("Mirtillo");  // Impostato il nome
+            blueberry.setName("Mirtillo");
             blueberry.setDescription("Un delizioso sapore di mirtillo fresco.");
 
             Flavour banana = new Flavour();
-            banana.setName("Banana");  // Impostato il nome
+            banana.setName("Banana");
             banana.setDescription("Sapore dolce e cremoso di banana.");
 
             Flavour pistachioChocolate = new Flavour();
-            pistachioChocolate.setName("Pistacchio e Cioccolato");  // Impostato il nome
+            pistachioChocolate.setName("Pistacchio e Cioccolato");
             pistachioChocolate.setDescription("L'incontro tra pistacchio e cioccolato.");
 
             flavourRepository.save(vanilla);
