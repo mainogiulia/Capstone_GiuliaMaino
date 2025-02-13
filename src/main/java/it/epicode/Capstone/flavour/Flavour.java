@@ -14,5 +14,8 @@ public class Flavour {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Enumerated (EnumType.STRING)
+    private FlavourType type;
+
     private String description;
 }

@@ -2,6 +2,7 @@ package it.epicode.Capstone.gelatoorder;
 
 import it.epicode.Capstone.flavour.Flavour;
 import it.epicode.Capstone.flavour.FlavourRepository;
+import it.epicode.Capstone.flavour.FlavourType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,22 +18,27 @@ public class GelatoFlavoursRunner implements CommandLineRunner {
         if (flavourRepository.count() == 0) {
             Flavour vanilla = new Flavour();
             vanilla.setName("Vaniglia");
+            vanilla.setType(FlavourType.CREMA);
             vanilla.setDescription("Gusto classico e cremoso.");
 
             Flavour chocolate = new Flavour();
             chocolate.setName("Cioccolato");
+            chocolate.setType(FlavourType.CREMA);
             chocolate.setDescription("Delizioso cioccolato fondente.");
 
             Flavour strawberry = new Flavour();
             strawberry.setName("Fragola");
+            strawberry.setType(FlavourType.FRUTTA);
             strawberry.setDescription("Gusto fresco e fruttato.");
 
             Flavour pistachio = new Flavour();
             pistachio.setName("Pistacchio");
+            pistachio.setType(FlavourType.CREMA);
             pistachio.setDescription("Un sapore intenso di pistacchio.");
 
             Flavour lemon = new Flavour();
             lemon.setName("Limone");
+            lemon.setType(FlavourType.FRUTTA);
             lemon.setDescription("Fresco e leggero, perfetto per l'estate.");
 
             Flavour mint = new Flavour();

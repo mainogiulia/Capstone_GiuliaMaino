@@ -43,6 +43,7 @@ public class FlavourService {
 
         Flavour flavour = new Flavour();
         flavour.setName(flavourRequest.getName());
+        flavour.setType(flavourRequest.getType());
         flavour.setDescription(flavourRequest.getDescription());
         return flavourRepository.save(flavour);
     }
@@ -59,6 +60,7 @@ public class FlavourService {
                 .orElseThrow(() -> new ResourceNotFoundException("Gusto con ID " + id + " non trovato"));
 
         existingFlavour.setName(flavourRequest.getName());
+        existingFlavour.setType(flavourRequest.getType());
         existingFlavour.setDescription(flavourRequest.getDescription());
         return flavourRepository.save(existingFlavour);
     }
