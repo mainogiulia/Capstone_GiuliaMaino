@@ -62,7 +62,7 @@ public class JwtTokenUtil {
 
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
-                .claim("roles", roles) // Aggiunge i ruoli come claim
+                .claim("roles", "ROLE_ADMIN") // Aggiunge i ruoli come claim
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
                 .signWith(SignatureAlgorithm.HS256, secret)

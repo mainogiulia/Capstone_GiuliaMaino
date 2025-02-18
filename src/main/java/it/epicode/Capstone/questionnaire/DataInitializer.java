@@ -20,7 +20,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-/*        // Domanda q1 (iniziale)
+        // Domanda q1 (iniziale)
         Question q1 = new Question();
         q1.setText("Caldo o freddo?");
         questionRepository.save(q1);
@@ -36,11 +36,11 @@ public class DataInitializer implements CommandLineRunner {
         questionRepository.save(q2B);
 
 
-// Drink finali
-       *//* Drink drink1 = new Drink();
+/*// Drink finali
+        Drink drink1 = new Drink();
         drink1.setName("Hot Toddy");
         drink1.setDescription("Un cocktail caldo con whiskey e spezie.");
-        drinkRepository.save(drink1);*//*
+        drinkRepository.save(drink1);
 
 // Risposte alla domanda q1
         Answer a1A = new Answer();
@@ -91,6 +91,7 @@ public class DataInitializer implements CommandLineRunner {
         a2F.setText("No alcool");
         a2F.setQuestion(q2B);
         a2F.setNextQuestion(q3F);
-        answerRepository.save(a2F);*/
+        answerRepository.save(a2F);
+    }*/
     }
 }
