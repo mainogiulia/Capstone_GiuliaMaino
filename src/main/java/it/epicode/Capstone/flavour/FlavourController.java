@@ -21,6 +21,12 @@ public class FlavourController {
         return ResponseEntity.ok(flavours);
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return ResponseEntity.ok( flavourService.findById(id) );
+    }
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Flavour> createFlavour(@Valid @RequestBody FlavourRequest flavourRequest) {

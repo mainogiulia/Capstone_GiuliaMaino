@@ -5,6 +5,7 @@ import it.epicode.Capstone.auth.AppUserRepository;
 import it.epicode.Capstone.auth.Role;
 import it.epicode.Capstone.exceptions.ResourceNotFoundException;
 import it.epicode.Capstone.exceptions.UnauthorizedException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,19 @@ public class FlavourService {
     //RECUPERO TUTTI I GUSTI
     public List<Flavour> getAllFlavours() {
         return flavourRepository.findAll();
+    }
+
+    public Flavour findById(Long id) {
+        AppUser loggedInUser = getCurrentUser();
+
+        if (!isAdmin(loggedInUser)) {
+            throw new UnauthorizedException("Non sei autorizzato ad eseguire questa operazione");
+        }
+        if(!flavourRepository.existsById(id)) {
+            throw new EntityNotFoundException("Il gusto non è stato trovato");
+        }
+
+        return flavourRepository.findById(id).get();
     }
 
     //CREO UN NUOVO GUSTO
