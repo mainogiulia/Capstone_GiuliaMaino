@@ -6,6 +6,7 @@ import it.epicode.Capstone.flavour.Flavour;
 import it.epicode.Capstone.flavour.FlavourRepository;
 import it.epicode.Capstone.orderdetail.GelatoOrderDetail;
 import it.epicode.Capstone.orderdetail.GelatoOrderDetailRepository;
+import it.epicode.Capstone.paypal.OrderStatusEnum;
 import it.epicode.Capstone.scoopquantity.ScoopQuantity;
 import it.epicode.Capstone.scoopquantity.ScoopQuantityRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -40,6 +41,7 @@ public class GelatoOrderRunner implements CommandLineRunner {
                 order.setDeliveryAddress(faker.address().fullAddress());
                 order.setCostumerName(faker.name().fullName());
                 order.setEmail(faker.internet().emailAddress());
+                order.setStatus(OrderStatusEnum.COMPLETED);
 
                 LocalDate orderDate = random.nextBoolean() ?
                         LocalDate.now() : LocalDate.now().minusDays(1);

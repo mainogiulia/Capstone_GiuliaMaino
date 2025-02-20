@@ -1,6 +1,7 @@
 package it.epicode.Capstone.gelatoorder;
 
 import it.epicode.Capstone.exceptions.ResourceNotFoundException;
+import it.epicode.Capstone.paypal.OrderStatusEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/order")
@@ -24,16 +26,27 @@ public class GelatoOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<GelatoOrder> createOrder(@RequestBody GelatoOrderRequest gelatoOrderRequest) {
+    public ResponseEntity<?> createOrder(@RequestBody GelatoOrderRequest gelatoOrderRequest) {
         try {
-            // Creiamo l'ordine usando il servizio
-            GelatoOrder createdGelatoOrder = gelatoOrderService.createOrder(gelatoOrderRequest);
-
-            // Restituiamo una risposta con stato CREATED e l'ordine creato
+            GelatoOrder createdGelatoOrder = gelatoOrderService.createOrder(gelatoOrderRequest, OrderStatusEnum.PENDING);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdGelatoOrder);
         } catch (ResourceNotFoundException ex) {
-            // Gestiamo l'errore nel caso in cui qualcosa non vada a buon fine
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", ex.getMessage()));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Errore interno"));
+        }
+    }
+
+    @PatchMapping("/{orderId}/status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateOrderStatus(@PathVariable Long orderId, @RequestParam OrderStatusEnum status) {
+        try {
+            GelatoOrder updatedOrder = gelatoOrderService.updateOrderStatus(orderId, status);
+            return ResponseEntity.ok(updatedOrder);
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Errore interno"));
         }
     }
 }

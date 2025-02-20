@@ -64,16 +64,16 @@ public class ReservationService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Conferma Prenotazione");
-        message.setText("Gentile " + customerName + ",\n"
-                + "La informiamo che la sua prenotazione è stata confermata per il giorno " + formattedDate + " alle ore " + reservationTime + ".\n"
-                + "Per eventuali cancellazioni, può utilizzare il seguente codice: " + cancellationCode + "\n"
-                + "Le ricordiamo che, qualora decidesse di cancellare la prenotazione, potrà farlo entro il termine indicato nei nostri termini e condizioni.\n"
-                + "Per qualsiasi ulteriore richiesta o chiarimento, non esiti a contattarci. Saremo felici di assisterla.\n"
-                + "La ringraziamo per aver scelto il nostro servizio e restiamo a sua disposizione.\n" +
+        message.setText("Ciao " + customerName + ",\n"
+                + "la tua prenotazione è confermata per il giorno " + formattedDate + " alle ore " + reservationTime + ".\n"
+                + "Per eventuali cancellazioni, puoi utilizzare il seguente codice nel nostro sito: " + cancellationCode + "\n."
+                + "Ti ringraziamo per averci scelto e restiamo a tua disposizione.\n" +
                 "\n" +
-                "Cordiali saluti,\n" +
-                "PUB\n" + //DEVI SCEGLIERE IL NOMEEEEEEE
-                "numero di telefono, indirizzo, ecc.."); //E COMPILA I CONTATTI
+                "A presto,\n" +
+                "Pertilia\n" +
+                "\n" +
+                "345/7168481\n" +
+                "Via Astichello, 58, Montecchio Precalcino");
 
         mailSender.send(message);
     }

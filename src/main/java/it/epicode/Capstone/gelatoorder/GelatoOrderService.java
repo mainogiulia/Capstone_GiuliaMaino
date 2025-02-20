@@ -9,6 +9,7 @@ import it.epicode.Capstone.flavour.Flavour;
 import it.epicode.Capstone.flavour.FlavourRepository;
 import it.epicode.Capstone.orderdetail.GelatoOrderDetail;
 import it.epicode.Capstone.orderdetail.GelatoOrderDetailRequest;
+import it.epicode.Capstone.paypal.OrderStatusEnum;
 import it.epicode.Capstone.scoopquantity.ScoopQuantity;
 import it.epicode.Capstone.scoopquantity.ScoopQuantityRequest;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class GelatoOrderService {
     private final AppUserRepository appUserRepository;
     private final JavaMailSender mailSender; // SERVE PER INVIARE L'EMAIL
 
-    private static final int pricePerScoop = 2;
+    private static final int PRICE_PER_SCOOP = 2;
 
     //DEFINISCO ADMIN E CURRENT USER
     private boolean isAdmin(AppUser user) {
@@ -44,13 +45,14 @@ public class GelatoOrderService {
     }
 
     //CREO UN NUOVO ORDINE
-    public GelatoOrder createOrder(GelatoOrderRequest gelatoOrderRequest) {
+    public GelatoOrder createOrder(GelatoOrderRequest gelatoOrderRequest, OrderStatusEnum status) {
 
         GelatoOrder gelatoOrder = new GelatoOrder();
         gelatoOrder.setCostumerName(gelatoOrderRequest.getCostumerName()); // IMPOSTA IL NOME INSERITO DALL'UTENTE
         gelatoOrder.setEmail(gelatoOrderRequest.getEmail()); // IMPOSTA L'EMAIL INSERITA DALL'UTENTE
         gelatoOrder.setOrderDate(gelatoOrderRequest.getOrderDate());
         gelatoOrder.setDeliveryAddress(gelatoOrderRequest.getDeliveryAddress());
+        gelatoOrder.setStatus(status);
 
         List<GelatoOrderDetail> gelatoOrderDetails = new ArrayList<>();
         int totalScoops = 0;
@@ -87,31 +89,49 @@ public class GelatoOrderService {
             gelatoOrderDetail.setGelatoOrder(gelatoOrder);
             gelatoOrderDetails.add(gelatoOrderDetail);
         }
-
         gelatoOrder.setDetails(gelatoOrderDetails);
+        gelatoOrder.setTotalPrice(totalScoops * PRICE_PER_SCOOP);
 
-        int totalPrice = totalScoops * 2;
-        gelatoOrder.setTotalPrice(totalPrice);
+        // Salva l'ordine
+        GelatoOrder savedOrder = gelatoOrderRepository.save(gelatoOrder);
 
-        sendConfirmationEmail(gelatoOrderRequest.getCostumerName(), gelatoOrderRequest.getEmail(), gelatoOrderRequest.getDeliveryAddress());
+        // Invia email solo se lo stato è COMPLETED
+        if (OrderStatusEnum.COMPLETED.equals(status)) {
+            sendConfirmationEmail(savedOrder.getCostumerName(), savedOrder.getEmail(), savedOrder.getDeliveryAddress());
+        }
 
-        return gelatoOrderRepository.save(gelatoOrder);
+        return savedOrder;
     }
 
-    private void sendConfirmationEmail(String customerName, String email, String deliveryAddress){
+    // Aggiungi questo metodo per aggiornare lo stato dell'ordine
+    public GelatoOrder updateOrderStatus(Long orderId, OrderStatusEnum status) {
+        GelatoOrder order = gelatoOrderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ordine non trovato con ID: " + orderId));
+
+        order.setStatus(status);
+
+        // Invia l'email solo quando lo stato diventa "completed"
+        if (OrderStatusEnum.COMPLETED.equals(status)) {
+            sendConfirmationEmail(order.getCostumerName(), order.getEmail(), order.getDeliveryAddress());
+        }
+
+        return gelatoOrderRepository.save(order);
+    }
+
+    private void sendConfirmationEmail(String customerName, String email, String deliveryAddress) {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Conferma Ordine");
-        message.setText("Gentile " + customerName + ",\n"
-                + "La informiamo che il suo ordine è stato confermato e sarà recapitato all'indirizzo seguente: " + deliveryAddress + ".\n"
-                + "Le ricordiamo che, qualora decidesse di cancellare l'ordine, potrà farlo entro il termine indicato nei nostri termini e condizioni.\n"
-                + "Per qualsiasi ulteriore richiesta o chiarimento, non esiti a contattarci. Saremo felici di assisterla.\n"
-                + "La ringraziamo per aver scelto il nostro servizio e restiamo a sua disposizione.\n" +
+        message.setText("Ciao " + customerName + ",\n"
+                + "abbiamo preso in carico il tuo ordine, programmato per le ore: " + deliveryAddress + ".\n"
+                + "Ti ringraziamo per averci scelto e restiamo a tua disposizione.\n" +
                 "\n" +
-                "Cordiali saluti,\n" +
-                "PUB\n" + //DEVI SCEGLIERE IL NOMEEEEEEE
-                "numero di telefono, indirizzo, ecc.."); //E COMPILA I CONTATTI
+                "A presto,\n" +
+                "Pertilia\n" +
+                "\n" +
+                "345/7168481\n" +
+                "Via Astichello, 58, Montecchio Precalcino");
 
         mailSender.send(message);
     }
