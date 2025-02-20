@@ -1,12 +1,12 @@
-package it.epicode.Capstone.gelatoorder;
+package it.epicode.Capstone.flavour;
 
-import it.epicode.Capstone.flavour.Flavour;
-import it.epicode.Capstone.flavour.FlavourRepository;
-import it.epicode.Capstone.flavour.FlavourType;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
+@Order(1)
 public class GelatoFlavoursRunner implements CommandLineRunner {
     private final FlavourRepository flavourRepository;
 
@@ -16,10 +16,12 @@ public class GelatoFlavoursRunner implements CommandLineRunner {
 
     public void run(String... args) throws Exception {
         if (flavourRepository.count() == 0) {
+
             Flavour whiteChocolate = new Flavour();
             whiteChocolate.setName("Cioccolato bianco");
             whiteChocolate.setType(FlavourType.CREMA);
-            whiteChocolate.setDescription("Dolce e cremoso, con un gusto delicato e burroso di cioccolato bianco.");
+            whiteChocolate.setDescription("Dolce e cremoso, con un gusto delicato di cioccolato bianco.");
+            whiteChocolate.setImagePath("flavours/cioccolatobianco.webp");
 
             Flavour darkChocolate = new Flavour();
             darkChocolate.setName("Fondente e torba");
@@ -35,11 +37,13 @@ public class GelatoFlavoursRunner implements CommandLineRunner {
             saltPepper.setName("Sale e pepe");
             saltPepper.setType(FlavourType.CREMA);
             saltPepper.setDescription("Insolito e intrigante, un perfetto equilibrio tra dolcezza e note speziate.");
+            saltPepper.setImagePath("flavours/salepepe.webp");
 
             Flavour stracciatella = new Flavour();
             stracciatella.setName("Stracciatella");
             stracciatella.setType(FlavourType.CREMA);
             stracciatella.setDescription("Crema di latte arricchita da croccanti scaglie di cioccolato fondente.");
+            stracciatella.setImagePath("flavours/stracciatella.webp");
 
             Flavour hazelnut = new Flavour();
             hazelnut.setName("Nocciola");
@@ -55,26 +59,31 @@ public class GelatoFlavoursRunner implements CommandLineRunner {
             pistachio.setName("Pistacchio");
             pistachio.setType(FlavourType.CREMA);
             pistachio.setDescription("Cremoso e aromatico, realizzato con pistacchi di alta qualità.");
+            pistachio.setImagePath("flavours/pistacchio.webp");
 
             Flavour chocolate = new Flavour();
             chocolate.setName("Cioccolato");
             chocolate.setType(FlavourType.CREMA);
             chocolate.setDescription("Deciso e goloso, con il sapore intenso del miglior cacao.");
+            chocolate.setImagePath("flavours/cioccolato.webp");
 
             Flavour coconut = new Flavour();
             coconut.setName("Cocco");
             coconut.setType(FlavourType.FRUTTA);
             coconut.setDescription("Esotico e rinfrescante, con la dolcezza naturale del cocco fresco.");
+            coconut.setImagePath("flavours/cocco.webp");
 
             Flavour lemon = new Flavour();
             lemon.setName("Limone");
             lemon.setType(FlavourType.FRUTTA);
             lemon.setDescription("Fresco e agrumato, con il gusto autentico dei limoni di Sicilia.");
+            lemon.setImagePath("flavours/limone.webp");
 
             Flavour raspberry = new Flavour();
             raspberry.setName("Lampone");
             raspberry.setType(FlavourType.FRUTTA);
             raspberry.setDescription("Dolce e fruttato, preparato con fragole mature e succose.");
+            raspberry.setImagePath("flavours/lampone.webp");
 
             Flavour strawberry = new Flavour();
             strawberry.setName("Fragola");
@@ -85,11 +94,13 @@ public class GelatoFlavoursRunner implements CommandLineRunner {
             apple.setName("Mela");
             apple.setType(FlavourType.FRUTTA);
             apple.setDescription("Morbido e leggermente acidulo, con il gusto naturale della mela.");
+            apple.setImagePath("flavours/mela.webp");
 
             Flavour orange = new Flavour();
             orange.setName("Arancia");
             orange.setType(FlavourType.FRUTTA);
             orange.setDescription("Profumato e vivace, con la freschezza delle arance appena raccolte.");
+            orange.setImagePath("flavours/arancia.webp");
 
             flavourRepository.save(whiteChocolate);
             flavourRepository.save(darkChocolate);

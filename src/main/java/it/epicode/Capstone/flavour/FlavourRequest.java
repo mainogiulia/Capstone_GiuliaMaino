@@ -13,4 +13,6 @@ public class FlavourRequest {
     private FlavourType type;
 
     private String description;
+
+    private String imagePath;
 }

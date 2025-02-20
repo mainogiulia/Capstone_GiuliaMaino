@@ -14,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GelatoOrderController {
     private final GelatoOrderService gelatoOrderService;
+    private GelatoOrderRepository gelatoOrderRepository;
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -25,9 +26,13 @@ public class GelatoOrderController {
     @PostMapping
     public ResponseEntity<GelatoOrder> createOrder(@RequestBody GelatoOrderRequest gelatoOrderRequest) {
         try {
+            // Creiamo l'ordine usando il servizio
             GelatoOrder createdGelatoOrder = gelatoOrderService.createOrder(gelatoOrderRequest);
+
+            // Restituiamo una risposta con stato CREATED e l'ordine creato
             return ResponseEntity.status(HttpStatus.CREATED).body(createdGelatoOrder);
         } catch (ResourceNotFoundException ex) {
+            // Gestiamo l'errore nel caso in cui qualcosa non vada a buon fine
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }

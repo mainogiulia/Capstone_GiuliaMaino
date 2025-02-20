@@ -25,7 +25,7 @@ public class GelatoOrder {
     private String deliveryAddress;
 
     @Column(nullable = false)
-    private String customerName;
+    private String costumerName;
 
     @Column(nullable = false)
     private String email;

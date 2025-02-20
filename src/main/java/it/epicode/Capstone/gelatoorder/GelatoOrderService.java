@@ -47,7 +47,7 @@ public class GelatoOrderService {
     public GelatoOrder createOrder(GelatoOrderRequest gelatoOrderRequest) {
 
         GelatoOrder gelatoOrder = new GelatoOrder();
-        gelatoOrder.setCustomerName(gelatoOrderRequest.getCostumerName()); // IMPOSTA IL NOME INSERITO DALL'UTENTE
+        gelatoOrder.setCostumerName(gelatoOrderRequest.getCostumerName()); // IMPOSTA IL NOME INSERITO DALL'UTENTE
         gelatoOrder.setEmail(gelatoOrderRequest.getEmail()); // IMPOSTA L'EMAIL INSERITA DALL'UTENTE
         gelatoOrder.setOrderDate(gelatoOrderRequest.getOrderDate());
         gelatoOrder.setDeliveryAddress(gelatoOrderRequest.getDeliveryAddress());
@@ -61,16 +61,26 @@ public class GelatoOrderService {
 
             List<ScoopQuantity> scoopQuantities = new ArrayList<>();
             for (ScoopQuantityRequest scoopRequest : detailRequest.getScoopQuantities()) {
-                ScoopQuantity scoopQuantity = new ScoopQuantity();
-                scoopQuantity.setNumberOfScoops(scoopRequest.getNumberOfScoops());
-
                 Flavour flavour = flavourRepository.findById(scoopRequest.getFlavourId())
                         .orElseThrow(() -> new ResourceNotFoundException("Gusto non trovato con ID: " + scoopRequest.getFlavourId()));
-                scoopQuantity.setFlavour(flavour);
 
-                scoopQuantity.setGelatoOrderDetail(gelatoOrderDetail);
-                scoopQuantities.add(scoopQuantity);
+                boolean flavourExists = scoopQuantities.stream()
+                        .anyMatch(scoop -> scoop.getFlavour().getId().equals(flavour.getId()));
 
+                if (!flavourExists) {
+                    ScoopQuantity scoopQuantity = new ScoopQuantity();
+                    scoopQuantity.setNumberOfScoops(scoopRequest.getNumberOfScoops());
+                    scoopQuantity.setFlavour(flavour);
+                    scoopQuantity.setGelatoOrderDetail(gelatoOrderDetail);
+                    scoopQuantities.add(scoopQuantity);
+                } else {
+                    ScoopQuantity existingScoop = scoopQuantities.stream()
+                            .filter(scoop -> scoop.getFlavour().getId().equals(flavour.getId()))
+                            .findFirst()
+                            .orElseThrow(() -> new RuntimeException("Flavour not found in scoop quantities"));
+
+                    existingScoop.setNumberOfScoops(existingScoop.getNumberOfScoops() + scoopRequest.getNumberOfScoops());
+                }
                 totalScoops += scoopRequest.getNumberOfScoops();
             }
             gelatoOrderDetail.setScoopQuantities(scoopQuantities);
@@ -114,6 +124,6 @@ public class GelatoOrderService {
             throw new UnauthorizedException("Accesso negato: solo gli amministratori possono visualizzare tutti gli ordini.");
         }
 
-        return gelatoOrderRepository.findAll();
+        return gelatoOrderRepository.findAllByOrderByOrderDateAsc();
     }
 }

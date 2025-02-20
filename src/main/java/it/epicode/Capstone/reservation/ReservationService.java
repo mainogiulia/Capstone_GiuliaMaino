@@ -39,7 +39,7 @@ public class ReservationService {
     //CREO UNA NUOVA PRENOTAZIONE E MI ARRIVA IL CODICE PER L'EVENTUALE CANCELLAZIONE
     public Reservation createReservation(ReservationRequest reservationRequest) {
 
-        String cancellationCode = UUID.randomUUID().toString(); //GENERA IL CODICE UNIVOCO PER LA CANCELLAZIONE
+        String cancellationCode = UUID.randomUUID().toString().replace("-", "").toUpperCase().substring(0, 10); //GENERA IL CODICE ALFANUMERICO UNIVOCO PER LA CANCELLAZIONE
 
         Reservation reservation = new Reservation();
         reservation.setCustomerName(reservationRequest.getCustomerName()); // IMPOSTA IL NOME INSERITO DALL'UTENTE
@@ -109,6 +109,6 @@ public class ReservationService {
             throw new UnauthorizedException("Accesso negato: solo gli amministratori possono visualizzare tutte le prenotazioni.");
         }
 
-        return reservationRepository.findAll();
+        return reservationRepository.findAllByOrderByReservationDateAscReservationTimeAsc();
     }
 }

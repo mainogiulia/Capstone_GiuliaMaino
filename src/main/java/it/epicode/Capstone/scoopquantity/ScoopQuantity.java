@@ -1,6 +1,7 @@
 package it.epicode.Capstone.scoopquantity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.epicode.Capstone.flavour.Flavour;
 import it.epicode.Capstone.orderdetail.GelatoOrderDetail;
 import jakarta.persistence.*;
@@ -15,7 +16,9 @@ public class ScoopQuantity {
 
     private int numberOfScoops;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "flavour_id", nullable = false)
+    @JsonManagedReference
     private Flavour flavour;
 
     @ManyToOne
