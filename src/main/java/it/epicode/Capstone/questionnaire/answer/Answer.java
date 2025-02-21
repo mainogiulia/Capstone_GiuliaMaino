@@ -17,9 +17,9 @@ public class Answer {
     @ManyToOne
     private Question question;
 
-    @ManyToOne
+    @OneToOne
     private Question nextQuestion;
 
-    @ManyToOne
+    @OneToOne
     private Drink finalDrink;
 }

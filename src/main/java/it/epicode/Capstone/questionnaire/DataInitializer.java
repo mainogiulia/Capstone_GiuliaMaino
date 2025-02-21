@@ -6,12 +6,14 @@ import it.epicode.Capstone.questionnaire.drink.Drink;
 import it.epicode.Capstone.questionnaire.drink.DrinkRepository;
 import it.epicode.Capstone.questionnaire.question.Question;
 import it.epicode.Capstone.questionnaire.question.QuestionRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class DataInitializer implements CommandLineRunner {
 
     private final QuestionRepository questionRepository;
@@ -283,77 +285,77 @@ public class DataInitializer implements CommandLineRunner {
         // Drink alla domanda q4A
         Drink dA1 = new Drink();
         dA1.setName("Old Fashion");
-       // dA1.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // dA1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dA1);
 
         Drink dA2 = new Drink();
         dA2.setName("Old Pal");
-       // dA2.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // dA2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dA2);
 
         Drink dA3 = new Drink();
         dA3.setName("Boulevardier");
-       // dA3.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // dA3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dA3);
 
         Drink dA4 = new Drink();
         dA4.setName("Manhattan");
-      //  dA4.setDescription("Un cocktail caldo con whiskey e spezie.");
+        //  dA4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dA4);
 
         Drink dA5 = new Drink();
         dA5.setName("Bobby Burns");
-       // dA5.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // dA5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dA5);
 
         // Drink alla domanda q4B (BRANDY)
         Drink dB1 = new Drink();
         dB1.setName("Stinger");
-      //  dB1.setDescription("Un cocktail caldo con whiskey e spezie.");
+        //  dB1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dB1);
 
         // Drink alla domanda q4C
         Drink dC1 = new Drink();
         dC1.setName("Brumble");
-       // dC1.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // dC1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dC1);
 
         Drink dC2 = new Drink();
         dC2.setName("Bee's Knees");
-       // dC2.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // dC2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dC2);
 
         Drink dC3 = new Drink();
         dC3.setName("Tom Collins");
-       // dC3.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // dC3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dC3);
 
         // Drink alla domanda q5A
         Drink d5A1 = new Drink();
         d5A1.setName("Cocktail Martini");
-      //  d5A.setDescription("Un cocktail caldo con whiskey e spezie.");
+        //  d5A.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5A1);
 
         Drink d5A2 = new Drink();
         d5A2.setName("Dirty Martini");
-       // d5A2.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // d5A2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5A2);
 
         // Drink alla domanda q5B
         Drink d5B1 = new Drink();
         d5B1.setName("Negroni");
-       // d5B1.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // d5B1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5B1);
 
         Drink d5B2 = new Drink();
         d5B2.setName("Negroni Sbagliato");
-       // d5B2.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // d5B2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5B2);
 
         // Drink alla domanda q4D
         Drink d5D1 = new Drink();
         d5D1.setName("Daiquiri (con rum chiaro)");
-       // d5D1.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // d5D1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5D1);
 
         Drink d5D2 = new Drink();
@@ -364,12 +366,12 @@ public class DataInitializer implements CommandLineRunner {
         // Drink alla domanda q4E
         Drink dE1 = new Drink();
         dE1.setName("God Father");
-       // dE1.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // dE1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dE1);
 
         Drink dE2 = new Drink();
         dE2.setName("Rusting Ale");
-       // dE2.setDescription("Un cocktail caldo con whiskey e spezie.");
+        // dE2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dE2);
 
         Drink dE3 = new Drink();
@@ -1011,14 +1013,14 @@ public class DataInitializer implements CommandLineRunner {
         drinkRepository.save(dU3);
 
         Drink dU4 = new Drink();
-        dU2.setName("Hot Cream al mou");
+        dU4.setName("Hot Cream al mou");
         // dU2.setDescription("Un cocktail caldo con whiskey e spezie.");
-        drinkRepository.save(dU2);
+        drinkRepository.save(dU4);
 
         Drink dU5 = new Drink();
-        dU3.setName("Hot Cream al cioccolato");
+        dU5.setName("Hot Cream al cioccolato");
         // dU3.setDescription("Un cocktail caldo con whiskey e spezie.");
-        drinkRepository.save(dU3);
+        drinkRepository.save(dU5);
 
         // Drink alla domanda q4V
         Drink dV1 = new Drink();
@@ -2210,7 +2212,7 @@ public class DataInitializer implements CommandLineRunner {
         a4S2.setQuestion(q5O);
         answerRepository.save(a4S2);
 
-        // Risposte alla domanda q5N (GELATO FRUTTA)
+      // Risposte alla domanda q5N (GELATO FRUTTA)
         Answer a5N1 = new Answer();
         a5N1.setText("Cocco");
         a5N1.setQuestion(q5N);
@@ -2251,7 +2253,7 @@ public class DataInitializer implements CommandLineRunner {
         Answer a5O1 = new Answer();
         a5O1.setText("Cioccolato bianco");
         a5O1.setQuestion(q5O);
-        a5O1.setFinalDrink(d5N3);
+        a5O1.setFinalDrink(d5O1);
         answerRepository.save(a5O1);
 
         Answer a5O2 = new Answer();
@@ -2321,7 +2323,7 @@ public class DataInitializer implements CommandLineRunner {
         a4T3.setFinalDrink(dT3);
         answerRepository.save(a4T3);
 
-        // Risposte alla domanda q4U (HOT CREAM)
+       // Risposte alla domanda q4U (HOT CREAM)
         Answer a4U1 = new Answer();
         a4U1.setText("Pistacchio");
         a4U1.setQuestion(q4U);
