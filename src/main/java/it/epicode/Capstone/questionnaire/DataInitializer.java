@@ -285,883 +285,723 @@ public class DataInitializer implements CommandLineRunner {
         // Drink alla domanda q4A
         Drink dA1 = new Drink();
         dA1.setName("Old Fashion");
-        // dA1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dA1);
 
         Drink dA2 = new Drink();
         dA2.setName("Old Pal");
-        // dA2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dA2);
 
         Drink dA3 = new Drink();
         dA3.setName("Boulevardier");
-        // dA3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dA3);
 
         Drink dA4 = new Drink();
         dA4.setName("Manhattan");
-        //  dA4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dA4);
 
         Drink dA5 = new Drink();
         dA5.setName("Bobby Burns");
-        // dA5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dA5);
 
         // Drink alla domanda q4B (BRANDY)
         Drink dB1 = new Drink();
         dB1.setName("Stinger");
-        //  dB1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dB1);
 
         // Drink alla domanda q4C
         Drink dC1 = new Drink();
         dC1.setName("Brumble");
-        // dC1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dC1);
 
         Drink dC2 = new Drink();
         dC2.setName("Bee's Knees");
-        // dC2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dC2);
 
         Drink dC3 = new Drink();
         dC3.setName("Tom Collins");
-        // dC3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dC3);
 
         // Drink alla domanda q5A
         Drink d5A1 = new Drink();
         d5A1.setName("Cocktail Martini");
-        //  d5A.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5A1);
 
         Drink d5A2 = new Drink();
         d5A2.setName("Dirty Martini");
-        // d5A2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5A2);
 
         // Drink alla domanda q5B
         Drink d5B1 = new Drink();
         d5B1.setName("Negroni");
-        // d5B1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5B1);
 
         Drink d5B2 = new Drink();
         d5B2.setName("Negroni Sbagliato");
-        // d5B2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5B2);
 
         // Drink alla domanda q4D
         Drink d5D1 = new Drink();
         d5D1.setName("Daiquiri (con rum chiaro)");
-        // d5D1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5D1);
 
         Drink d5D2 = new Drink();
         d5D2.setName("Daiquiri (con rum scuro)");
-        //d5D2.setDescription("Un cocktail caldo con whiskey e spezie.");
+
         drinkRepository.save(d5D2);
 
         // Drink alla domanda q4E
         Drink dE1 = new Drink();
         dE1.setName("God Father");
-        // dE1.setDescription("Un cocktail caldo con whiskey e spezie.");
+
         drinkRepository.save(dE1);
 
         Drink dE2 = new Drink();
         dE2.setName("Rusting Ale");
-        // dE2.setDescription("Un cocktail caldo con whiskey e spezie.");
+
         drinkRepository.save(dE2);
 
         Drink dE3 = new Drink();
         dE3.setName("Pennicillin");
-        // dE3.setDescription("Un cocktail caldo con whiskey e spezie.");
+
         drinkRepository.save(dE3);
 
         // Drink alla domanda q4F
         Drink dF1 = new Drink();
         dF1.setName("Margarita");
-        // dF1.setDescription("Un cocktail caldo con whiskey e spezie.");
+
         drinkRepository.save(dF1);
 
         Drink dF2 = new Drink();
         dF2.setName("Tommy's Margarita");
-        // dF2.setDescription("Un cocktail caldo con whiskey e spezie.");
+
         drinkRepository.save(dF2);
 
         // Drink alla domanda q4G
         Drink dG1 = new Drink();
         dG1.setName("Black Russian");
-        // dG1.setDescription("Un cocktail caldo con whiskey e spezie.");
+
         drinkRepository.save(dG1);
 
         Drink dG2 = new Drink();
         dG2.setName("White Russian");
-        // dG2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dG2);
 
         Drink dG3 = new Drink();
         dG3.setName("God Mother");
-        // dG3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dG3);
 
         Drink dG4 = new Drink();
         dG4.setName("Blue Lagoon");
-        // dG4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dG4);
 
         // Drink alla domanda q4I
         Drink dI2 = new Drink();
         dI2.setName("Pisco Sour");
-        // dI2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dI2);
 
         Drink dI3 = new Drink();
         dI3.setName("Midori Sour");
-        // dI3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dI3);
 
         Drink dI4 = new Drink();
         dI4.setName("Clover Club");
-        // dI4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dI4);
 
         Drink dI5 = new Drink();
         dI5.setName("Gin Sour");
-        // dI5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dI5);
 
         Drink dI6 = new Drink();
         dI6.setName("Vodka Sour");
-        // dI6.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dI6);
 
         // Drink alla domanda q5E
         Drink d5E1 = new Drink();
         d5E1.setName("Bourbon Sour con profumo di cannella");
-        // d5E1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5E1);
 
         Drink d5E2 = new Drink();
         d5E2.setName("Bourbon Sour con profumo di basilico");
-        // d5E2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5E2);
 
         Drink d5E3 = new Drink();
         d5E3.setName("Bourbon Club");
-        // d5E3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5E3);
 
         // Drink alla domanda q4H
         Drink dH1 = new Drink();
         dH1.setName("Long Island Ice Tea");
-        // dH1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dH1);
 
         Drink dH2 = new Drink();
         dH2.setName("Tokyo Ice Tea");
-        // dH2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dH2);
 
         Drink dH3 = new Drink();
         dH3.setName("Texas Ice Tea");
-        // dH3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dH3);
 
         Drink dH4 = new Drink();
         dH4.setName("Quattro Bianchi");
-        // dH4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dH4);
 
         // Drink alla domanda q4J
         Drink dJ1 = new Drink();
         dJ1.setName("Pestato al lime con sapore di liquirizia");
-        // dJ1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ1);
 
         Drink dJ2 = new Drink();
         dJ2.setName("Pestato al lime con sapore di cannella");
-        // dJ2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ2);
 
         Drink dJ3 = new Drink();
         dJ3.setName("Pestato al lime con sapore di anice");
-        // dJ3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ3);
 
         Drink dJ4 = new Drink();
         dJ4.setName("Pestato al lime con sapore di sanbuco");
-        // dJ4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ4);
 
         Drink dJ5 = new Drink();
         dJ5.setName("Pestato al lime con sapore di passion fruit");
-        // dJ5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ5);
 
         Drink dJ6 = new Drink();
         dJ6.setName("Pestato al lime con sapore di mela verde");
-        // dJ6.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ6);
 
         Drink dJ7 = new Drink();
         dJ7.setName("Pestato al lime con sapore di pesca");
-        // dJ7.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ7);
 
         Drink dJ8 = new Drink();
         dJ8.setName("Pestato al lime con sapore di kiwi");
-        // dJ8.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ8);
 
         Drink dJ9 = new Drink();
         dJ9.setName("Pestato al lime con sapore di lampone");
-        // dJ9.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ9);
 
         Drink dJ10 = new Drink();
         dJ10.setName("Pestato al lime con sapore di fragola");
-        // dJ10.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ10);
 
         Drink dJ11 = new Drink();
         dJ11.setName("Pestato al lime con sapore di kaipiroska");
-        // dJ11.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ11);
 
         Drink dJ12 = new Drink();
         dJ12.setName("Pestato al lime con sapore di kaipirina");
-        // dJ12.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ12);
 
         Drink dJ13 = new Drink();
         dJ13.setName("Pestato al lime con sapore di zenzero");
-        // dJ13.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dJ13);
 
         // Drink alla domanda q4K
         Drink dK1 = new Drink();
         dK1.setName("Double Drink al passion fruit");
-        // dK1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dK1);
 
         Drink dK2 = new Drink();
         dK2.setName("Double Drink al mirtillo");
-        // dK2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dK2);
 
         Drink dK3 = new Drink();
         dK3.setName("Double Drink alla melagrana");
-        // dK3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dK3);
 
         // Drink alla domanda q5C
         Drink d5C1 = new Drink();
         d5C1.setName("Double Drink all'ananas-passion");
-        // d5C1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5C1);
 
         Drink d5C2 = new Drink();
         d5C2.setName("Double Drink all'ananas-cocco");
-        // d5C2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5C2);
 
         Drink d5C3 = new Drink();
         d5C3.setName("Double Drink all'ananas");
-        // d5C3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5C3);
 
         // Drink alla domanda q5D
         Drink d5D11 = new Drink();
         d5D11.setName("Double Drink al lampone-cocco");
-        // d5D1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5D11);
 
         Drink d5D22 = new Drink();
         d5D22.setName("Double Drink al lampone-vaniglia");
-        // d5D2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5D22);
 
         Drink d5D3 = new Drink();
         d5D3.setName("Double Drink al lampone-arancia");
-        // d5D3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5D3);
 
         // Drink alla domanda q5F
         Drink d5F1 = new Drink();
         d5F1.setName("Double Drink al pompelmo-bitter");
-        // d5F1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5F1);
 
         Drink d5F2 = new Drink();
         d5F2.setName("Double Drink al pompelmo-zenzero");
-        // d5F2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5F2);
 
         // Drink alla domanda q5G
         Drink d5G1 = new Drink();
         d5G1.setName("Double Drink al cocco-menta");
-        // d5G1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5G1);
 
         Drink d5G2 = new Drink();
         d5G2.setName("Double Drink al cocco");
-        // d5G2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5G2);
 
         // Drink alla domanda q4L
         Drink dL1 = new Drink();
         dL1.setName("Double Drink alla vaniglia-mou");
-        // dL1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dL1);
 
         Drink dL2 = new Drink();
         dL2.setName("Double Drink al cocco e lampone");
-        // dL2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dL2);
 
         Drink dL3 = new Drink();
         dL3.setName("Alexander");
-        // dL3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dL3);
 
         Drink dL4 = new Drink();
         dL4.setName("Grasshopper");
-        // dL4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dL4);
 
         Drink dL5 = new Drink();
         dL5.setName("Double Drink all'anice e liquirizia");
-        // dL5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dL5);
 
         Drink dL6 = new Drink();
         dL6.setName("Double Drink alla nocciola e caffè");
-        // dL6.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dL6);
 
         Drink dL7 = new Drink();
         dL7.setName("Double Drink alla nocciola e cacao");
-        // dL7.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dL7);
 
         Drink dL8 = new Drink();
         dL8.setName("Double Drink al caffè");
-        // dL8.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dL8);
 
         // Drink alla domanda q4M
         Drink dM1 = new Drink();
         dM1.setName("Double Drink al caffè-Disaronno");
-        // dM1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dM1);
 
         Drink dM2 = new Drink();
         dM2.setName("Double Drink al caffè-vaniglia");
-        // dM2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dM2);
 
         Drink dM3 = new Drink();
         dM3.setName("Espresso Martini");
-        // dM3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dM3);
 
         // Drink alla domanda q4P
         Drink dP1 = new Drink();
         dP1.setName("Mojito");
-        // dP1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dP1);
 
         Drink dP3 = new Drink();
         dP3.setName("Dark and Stormy");
-        // dP3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dP3);
 
         Drink dP4 = new Drink();
         dP4.setName("Mint Julep");
-        // dP4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dP4);
 
         Drink dP5 = new Drink();
         dP5.setName("Gin Fizz");
-        // dP5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dP5);
 
         // Drink alla domanda q5H
         Drink d5H1 = new Drink();
         d5H1.setName("Moscow Mule");
-        // d5H1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5H1);
 
         Drink d5H2 = new Drink();
         d5H2.setName("London Mule");
-        // d5H2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5H2);
 
         Drink d5H3 = new Drink();
         d5H3.setName("Jamaican Mule");
-        // d5H3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5H3);
 
         // Drink alla domanda q4O
         Drink dO1 = new Drink();
         dO1.setName("Pina Colada");
-        // dO1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dO1);
 
         Drink dO2 = new Drink();
         dO2.setName("Long Drink all'ananas-passion");
-        // dO2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dO2);
 
         Drink dO3 = new Drink();
         dO3.setName("Long Drink all'arancia");
-        // dO3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dO3);
 
         Drink dO4 = new Drink();
         dO4.setName("Tequila Sunrise");
-        // dO4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dO4);
 
         Drink dO5 = new Drink();
         dO5.setName("Sex on the Beach");
-        // dO5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dO5);
 
         // Drink alla domanda q5I
         Drink d5I1 = new Drink();
         d5I1.setName("Long Drink al mango-pesca");
-        // d5I1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5I1);
 
         Drink d5I2 = new Drink();
         d5I2.setName("Long Drink al mango-passion");
-        // d5I2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5I2);
 
         // Drink alla domanda q5J
         Drink d5J1 = new Drink();
         d5J1.setName("Long Drink alla fragola-banana");
-        // d5J1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5J1);
 
         Drink d5J2 = new Drink();
         d5J2.setName("Long Drink alla fragola-lampone");
-        // d5J2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5J2);
 
         // Drink alla domanda q5K
         Drink d5K1 = new Drink();
         d5K1.setName("Long Drink al lampone-arancia");
-        // d5K1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5K1);
 
         Drink d5K2 = new Drink();
         d5K2.setName("Long Drink al lampone-fragola");
-        // d5K2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5K2);
 
         // Drink alla domanda q5L
         Drink d5L1 = new Drink();
         d5L1.setName("Long Drink al pompelmo-bitter");
-        // d5L1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5L1);
 
         Drink d5L2 = new Drink();
         d5L2.setName("Long Drink al pompelmo-zenzero");
-        // d5L2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5L2);
 
         // Drink alla domanda q4N
         Drink dN1 = new Drink();
         dN1.setName("Gimlet");
-        // dN1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dN1);
 
         Drink dN2 = new Drink();
         dN2.setName("Erbaceo amaro");
-        // dN2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dN2);
 
         Drink dN3 = new Drink();
         dN3.setName("Rum e menta");
-        // dN3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dN3);
 
         // Drink alla domanda q5M
         Drink d5M1 = new Drink();
         d5M1.setName("Whiskey Vermouth");
-        // d5M1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5M1);
 
         Drink d5M2 = new Drink();
         d5M2.setName("Whiskey Bitter");
-        // d5M2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5M2);
 
         Drink d5M3 = new Drink();
         d5M3.setName("Whiskey Menta");
-        // d5M3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5M3);
 
         Drink d5M4 = new Drink();
         d5M4.setName("Whiskey Agrumi");
-        // d5M4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5M4);
 
         Drink d5M5 = new Drink();
         d5M5.setName("Whiskey Spezie");
-        // d5M5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5M5);
 
         // Drink alla domanda q4Q
         Drink dQ1 = new Drink();
         dQ1.setName("Drink analcolico alla fragola-lime");
-        // dQ1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ1);
 
         Drink dQ2 = new Drink();
         dQ2.setName("Drink analcolico alla fragola-lampone");
-        // dQ2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ2);
 
         Drink dQ3 = new Drink();
         dQ3.setName("Drink analcolico al lampone-mirtillo");
-        // dQ3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ3);
 
         Drink dQ4 = new Drink();
         dQ4.setName("Drink analcolico al mango-lampone-lime");
-        // dQ4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ4);
 
         Drink dQ5 = new Drink();
         dQ5.setName("Drink analcolico al mango-passion");
-        // dQ5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ5);
 
         Drink dQ6 = new Drink();
         dQ6.setName("Drink analcolico all'ananas-cocco-lampone");
-        // dQ6.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ6);
 
         Drink dQ7 = new Drink();
         dQ7.setName("Drink analcolico all'arancia-sorbetto alla mela-zenzero");
-        // dQ7.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ7);
 
         Drink dQ8 = new Drink();
         dQ8.setName("Drink analcolico all'arancia-sorbetto alla mela-lime");
-        // dQ8.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ8);
 
         Drink dQ9 = new Drink();
         dQ9.setName("Drink analcolico al pompelmo-sorbetto all'arancia-zenzero");
-        // dQ9.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ9);
 
         Drink dQ10 = new Drink();
         dQ10.setName("Drink analcolico alla fragola-banana");
-        // dQ10.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ10);
 
         Drink dQ11 = new Drink();
         dQ11.setName("Drink analcolico al lampone-banana");
-        // dQ11.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dQ11);
 
         // Drink alla domanda q4R
         Drink dR1 = new Drink();
         dR1.setName("Virgin Mojito");
-        // dR1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dR1);
 
         Drink dR2 = new Drink();
         dR2.setName("Zenzerata");
-        // dR2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dR2);
 
         Drink dR3 = new Drink();
         dR3.setName("Bacco e Venere");
-        // dR3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dR3);
 
         Drink dR4 = new Drink();
         dR4.setName("Maso Antico");
-        // dR4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dR4);
 
         Drink dR5 = new Drink();
         dR5.setName("Sapore Delicato");
-        // dR5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dR5);
 
         Drink dR6 = new Drink();
         dR6.setName("Disseta");
-        // dR6.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dR6);
 
         // Drink alla domanda q5N
         Drink d5N1 = new Drink();
         d5N1.setName("Marzapane al cocco");
-        // d5N1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5N1);
 
         Drink d5N2 = new Drink();
         d5N2.setName("Marzapane al limone");
-        // d5N2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5N2);
 
         Drink d5N3 = new Drink();
         d5N3.setName("Marzapane alla fragola");
-        // d5N3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5N3);
 
         Drink d5N4 = new Drink();
         d5N4.setName("Marzapane al lampone");
-        // d5N4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5N4);
 
         Drink d5N5 = new Drink();
         d5N5.setName("Marzapane alla mela");
-        // d5N5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5N5);
 
         Drink d5N6 = new Drink();
         d5N6.setName("Marzapane all'arancia");
-        // d5N66.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5N6);
 
         // Drink alla domanda q5O
         Drink d5O1 = new Drink();
         d5O1.setName("Marzapane al cioccolato bianco");
-        // d5O1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5O1);
 
         Drink d5O2 = new Drink();
         d5O2.setName("Marzapane al fondente e torba");
-        // d5O2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5O2);
 
         Drink d5O3 = new Drink();
         d5O3.setName("Marzapane alla crema vaniglia");
-        // d5O3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5O3);
 
         Drink d5O4 = new Drink();
         d5O4.setName("Marzapane al sale e pepe");
-        // d5O4.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5O4);
 
         Drink d5O5 = new Drink();
         d5O5.setName("Marzapane alla stracciatella");
-        // d5O5.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5O5);
 
         Drink d5O6 = new Drink();
         d5O6.setName("Marzapane alla nocciola");
-        // d5O66.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5O6);
 
         Drink d5O7 = new Drink();
         d5O7.setName("Marzapane alla mandorla");
-        // d5O77.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5O7);
 
         Drink d5O8 = new Drink();
         d5O8.setName("Marzapane al pistacchio");
-        // d5O88.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5O8);
 
         Drink d5O9 = new Drink();
         d5O9.setName("Marzapane al cioccolato");
-        // d5O99.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(d5O9);
 
         // Drink alla domanda q4T
         Drink dT1 = new Drink();
         dT1.setName("Grog alle spezie");
-        // dT1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dT1);
 
         Drink dT2 = new Drink();
         dT2.setName("Grog ai fiori");
-        // dT2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dT2);
 
         Drink dT3 = new Drink();
         dT3.setName("Grog alla frutta");
-        // dT3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dT3);
 
         // Drink alla domanda q4U
         Drink dU1 = new Drink();
         dU1.setName("Hot Cream al pistacchio");
-        // dU1.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dU1);
 
         Drink dU2 = new Drink();
         dU2.setName("Hot Cream alla nocciola");
-        // dU2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dU2);
 
         Drink dU3 = new Drink();
         dU3.setName("Hot Cream alla mandorla");
-        // dU3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dU3);
 
         Drink dU4 = new Drink();
         dU4.setName("Hot Cream al mou");
-        // dU2.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dU4);
 
         Drink dU5 = new Drink();
         dU5.setName("Hot Cream al cioccolato");
-        // dU3.setDescription("Un cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dU5);
 
         // Drink alla domanda q4V
         Drink dV1 = new Drink();
         dV1.setName("Hot Fruit al mirtillo");
-        // dV1.setDescription("Vn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dV1);
 
         Drink dV2 = new Drink();
         dV2.setName("Hot Fruit all'arancia");
-        // dV2.setDescription("Vn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dV2);
 
         Drink dV3 = new Drink();
         dV3.setName("Hot Fruit alla mela");
-        // dV3.setDescription("Vn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dV3);
 
         // Drink alla domanda q4W
         Drink dW1 = new Drink();
         dW1.setName("Irish coffee");
-        // dW1.setDescription("Wn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dW1);
 
         // Drink alla domanda q4X
         Drink dX1 = new Drink();
         dX1.setName("Brulè con vino bianco");
-        // dX1.setDescription("Xn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dX1);
 
         Drink dX2 = new Drink();
         dX2.setName("Brulè con vino rosso");
-        // dX2.setDescription("Xn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dX2);
 
         // Drink alla domanda q4Y
         Drink dY1 = new Drink();
         dY1.setName("Decotto al cedro");
-        // dY1.setDescription("Yn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dY1);
 
         Drink dY2 = new Drink();
         dY2.setName("Decotto alla menta");
-        // dY2.setDescription("Yn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dY2);
 
         Drink dY3 = new Drink();
         dY3.setName("Decotto alla mela");
-        // dY3.setDescription("Yn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dY3);
 
         Drink dY4 = new Drink();
         dY4.setName("Decotto al mirtillo");
-        // dY4.setDescription("Yn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dY4);
 
         Drink dY5 = new Drink();
         dY5.setName("Decotto allo zenzero");
-        // dY5.setDescription("Yn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dY5);
 
         // Drink alla domanda q4Z
         Drink dZ1 = new Drink();
         dZ1.setName("Infuso digestivo");
-        // dZ1.setDescription("Zn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dZ1);
 
         Drink dZ2 = new Drink();
         dZ2.setName("Infuso tropicale");
-        // dZ2.setDescription("Zn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dZ2);
 
         Drink dZ3 = new Drink();
         dZ3.setName("Infuso alla frutta mista");
-        // dZ3.setDescription("Zn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dZ3);
 
         Drink dZ4 = new Drink();
         dZ4.setName("Infuso al mango-pesca");
-        // dZ4.setDescription("Zn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dZ4);
 
         Drink dZ5 = new Drink();
         dZ5.setName("Infuso ai fiori");
-        // dZ5.setDescription("Zn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dZ5);
 
         Drink dZ6 = new Drink();
         dZ6.setName("Infuso speziato");
-        // dZ6.setDescription("Zn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dZ6);
 
         Drink dZ7 = new Drink();
         dZ7.setName("Infuso erbaceo");
-        // dZ7.setDescription("Zn cocktail caldo con whiskey e spezie.");
+
         drinkRepository.save(dZ7);
 
         // Drink alla domanda q4aa
         Drink daa1 = new Drink();
         daa1.setName("Sapore di latte al pistacchio");
-        // daa1.setDescription("aan cocktail caldo con whiskey e spezie.");
         drinkRepository.save(daa1);
 
         Drink daa2 = new Drink();
         daa2.setName("Sapore di latte alla nocciola");
-        // daa2.setDescription("aan cocktail caldo con whiskey e spezie.");
         drinkRepository.save(daa2);
 
         Drink daa3 = new Drink();
         daa3.setName("Sapore di latte alla mandorla");
-        // daa3.setDescription("aan cocktail caldo con whiskey e spezie.");
         drinkRepository.save(daa3);
 
         Drink daa4 = new Drink();
         daa4.setName("Sapore di latte al mou");
-        // daa4.setDescription("aan cocktail caldo con whiskey e spezie.");
         drinkRepository.save(daa4);
 
         Drink daa5 = new Drink();
         daa5.setName("Sapore di latte al cioccolato");
-        // daa5.setDescription("aan cocktail caldo con whiskey e spezie.");
         drinkRepository.save(daa5);
 
         // Drink alla domanda q4bb
         Drink dbb1 = new Drink();
         dbb1.setName("Cacao Cult con gelato");
-        // dbb1.setDescription("bbn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dbb1);
 
         Drink dbb2 = new Drink();
         dbb2.setName("Cacao Cult con frutta fresca");
-        // dbb2.setDescription("bbn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dbb2);
 
         Drink dbb3 = new Drink();
         dbb3.setName("Cacao Cult con frutta secca");
-        // dbb3.setDescription("bbn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dbb3);
 
         Drink dbb4 = new Drink();
         dbb4.setName("Cacao Cult con fave di cacao");
-        // dbb4.setDescription("bbn cocktail caldo con whiskey e spezie.");
         drinkRepository.save(dbb4);
 
         // Risposte alla domanda q1
