@@ -13,6 +13,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Component
@@ -38,13 +40,17 @@ public class GelatoOrderRunner implements CommandLineRunner {
             for (int i = 0; i < 7; i++) {
                 GelatoOrder order = new GelatoOrder();
 
-                order.setDeliveryAddress(faker.address().fullAddress());
                 order.setCostumerName(faker.name().fullName());
                 order.setEmail(faker.internet().emailAddress());
                 order.setStatus(OrderStatusEnum.COMPLETED);
 
-                LocalDate orderDate = random.nextBoolean() ?
-                        LocalDate.now() : LocalDate.now().minusDays(1);
+                LocalDateTime orderDate = random.nextBoolean() ?
+                        LocalDateTime.now() :
+                        LocalDateTime.now().minusDays(1);
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'ore' HH:mm");
+                String formattedDate = orderDate.format(formatter);
+
                 order.setOrderDate(orderDate);
 
                 GelatoOrderDetail detail = new GelatoOrderDetail();

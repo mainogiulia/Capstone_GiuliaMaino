@@ -9,6 +9,7 @@ import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +25,7 @@ public class GelatoOrder {
     @PositiveOrZero(message = "Il totale deve essere un numero positivo")
     private int totalPrice;
 
-    private LocalDate orderDate;
-
-    private String deliveryAddress;
+    private LocalDateTime orderDate;
 
     @Column(nullable = false)
     private String costumerName;

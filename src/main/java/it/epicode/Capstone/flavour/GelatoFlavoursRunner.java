@@ -27,11 +27,13 @@ public class GelatoFlavoursRunner implements CommandLineRunner {
             darkChocolate.setName("Fondente e torba");
             darkChocolate.setType(FlavourType.CREMA);
             darkChocolate.setDescription("Intenso e affumicato, un mix unico di cioccolato fondente e note torbate.");
+            darkChocolate.setImagePath("flavours/cioccolato.webp");
 
             Flavour creamVanilla = new Flavour();
             creamVanilla.setName("Crema vaniglia");
             creamVanilla.setType(FlavourType.CREMA);
             creamVanilla.setDescription("Morbida e vellutata, con il classico aroma della vaniglia del Madagascar.");
+            creamVanilla.setImagePath("flavours/cremavaniglia.webp");
 
             Flavour saltPepper = new Flavour();
             saltPepper.setName("Sale e pepe");
@@ -49,11 +51,13 @@ public class GelatoFlavoursRunner implements CommandLineRunner {
             hazelnut.setName("Nocciola");
             hazelnut.setType(FlavourType.CREMA);
             hazelnut.setDescription("Ricco e avvolgente, con il gusto autentico delle nocciole tostate.");
+            hazelnut.setImagePath("flavours/nocciola.webp");
 
             Flavour almond = new Flavour();
             almond.setName("Mandorla");
             almond.setType(FlavourType.CREMA);
             almond.setDescription("Delicato e raffinato, con il sapore inconfondibile delle mandorle siciliane.");
+            almond.setImagePath("flavours/mandorla.webp");
 
             Flavour pistachio = new Flavour();
             pistachio.setName("Pistacchio");
@@ -89,6 +93,7 @@ public class GelatoFlavoursRunner implements CommandLineRunner {
             strawberry.setName("Fragola");
             strawberry.setType(FlavourType.FRUTTA);
             strawberry.setDescription("Acidulo e rinfrescante, con il sapore intenso dei lamponi freschi.");
+            strawberry.setImagePath("flavours/fragola.webp");
 
             Flavour apple = new Flavour();
             apple.setName("Mela");

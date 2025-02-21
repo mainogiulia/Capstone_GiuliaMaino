@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,6 @@ public class GelatoOrderService {
         gelatoOrder.setCostumerName(gelatoOrderRequest.getCostumerName()); // IMPOSTA IL NOME INSERITO DALL'UTENTE
         gelatoOrder.setEmail(gelatoOrderRequest.getEmail()); // IMPOSTA L'EMAIL INSERITA DALL'UTENTE
         gelatoOrder.setOrderDate(gelatoOrderRequest.getOrderDate());
-        gelatoOrder.setDeliveryAddress(gelatoOrderRequest.getDeliveryAddress());
         gelatoOrder.setStatus(status);
 
         List<GelatoOrderDetail> gelatoOrderDetails = new ArrayList<>();
@@ -97,7 +97,7 @@ public class GelatoOrderService {
 
         // Invia email solo se lo stato è COMPLETED
         if (OrderStatusEnum.COMPLETED.equals(status)) {
-            sendConfirmationEmail(savedOrder.getCostumerName(), savedOrder.getEmail(), savedOrder.getDeliveryAddress());
+            sendConfirmationEmail(savedOrder.getCostumerName(), savedOrder.getEmail(), savedOrder.getOrderDate());
         }
 
         return savedOrder;
@@ -112,19 +112,23 @@ public class GelatoOrderService {
 
         // Invia l'email solo quando lo stato diventa "completed"
         if (OrderStatusEnum.COMPLETED.equals(status)) {
-            sendConfirmationEmail(order.getCostumerName(), order.getEmail(), order.getDeliveryAddress());
+            sendConfirmationEmail(order.getCostumerName(), order.getEmail(), order.getOrderDate());
         }
 
         return gelatoOrderRepository.save(order);
     }
 
-    private void sendConfirmationEmail(String customerName, String email, String deliveryAddress) {
+    private void sendConfirmationEmail(String customerName, String email, LocalDateTime orderDate) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'alle ore' HH:mm");
+        String formattedDate = orderDate.format(formatter);
+
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Conferma Ordine");
         message.setText("Ciao " + customerName + ",\n"
-                + "abbiamo preso in carico il tuo ordine, programmato per le ore: " + deliveryAddress + ".\n"
+                + "abbiamo preso in carico il tuo ordine, programmato per le ore: " + formattedDate + ".\n"
                 + "Ti ringraziamo per averci scelto e restiamo a tua disposizione.\n" +
                 "\n" +
                 "A presto,\n" +

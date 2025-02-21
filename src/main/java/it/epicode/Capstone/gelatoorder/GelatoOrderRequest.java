@@ -3,8 +3,7 @@ package it.epicode.Capstone.gelatoorder;
 import it.epicode.Capstone.orderdetail.GelatoOrderDetailRequest;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,10 +16,7 @@ public class GelatoOrderRequest {
     private int totalPrice;
 
     @FutureOrPresent(message = "La data dell'ordine non può essere nel passato")
-    private LocalDate orderDate;
-
-    @NotEmpty(message = "L'indirizzo di consegna non può essere vuoto")
-    private String deliveryAddress;
+    private LocalDateTime orderDate;
 
     @NotBlank(message = "Il nome del cliente non può essere vuoto")
     private String costumerName;
