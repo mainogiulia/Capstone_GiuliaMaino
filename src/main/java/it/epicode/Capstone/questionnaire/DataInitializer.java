@@ -2039,17 +2039,17 @@ public class DataInitializer implements CommandLineRunner {
         a4R6.setFinalDrink(dR6);
         answerRepository.save(a4R6);
 
-        // Risposte alla domanda q4S (GELATO)
+        // Risposte alla domanda q4S (MARZAPANE)
         Answer a4S1 = new Answer();
         a4S1.setText("Montato con frutta fresca");
         a4S1.setQuestion(q4S);
-        a4S1.setQuestion(q5N);
+        a4S1.setNextQuestion(q5N);
         answerRepository.save(a4S1);
 
         Answer a4S2 = new Answer();
         a4S2.setText("Montato con latte di mandorla");
         a4S2.setQuestion(q4S);
-        a4S2.setQuestion(q5O);
+        a4S2.setNextQuestion(q5O);
         answerRepository.save(a4S2);
 
       // Risposte alla domanda q5N (GELATO FRUTTA)
@@ -2340,13 +2340,13 @@ public class DataInitializer implements CommandLineRunner {
 
         // Risposte alla domanda q4bb (CACAO CULT)
         Answer a4bb1 = new Answer();
-        a4bb1.setText("gelato");
+        a4bb1.setText("Gelato");
         a4bb1.setQuestion(q4bb);
         a4bb1.setFinalDrink(dbb1);
         answerRepository.save(a4bb1);
 
         Answer a4bb2 = new Answer();
-        a4bb2.setText("frutta fresca");
+        a4bb2.setText("Frutta fresca");
         a4bb2.setQuestion(q4bb);
         a4bb2.setFinalDrink(dbb2);
         answerRepository.save(a4bb2);

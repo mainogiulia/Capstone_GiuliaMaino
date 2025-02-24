@@ -44,9 +44,20 @@ public class GelatoOrderRunner implements CommandLineRunner {
                 order.setEmail(faker.internet().emailAddress());
                 order.setStatus(OrderStatusEnum.COMPLETED);
 
-                LocalDateTime orderDate = random.nextBoolean() ?
-                        LocalDateTime.now() :
-                        LocalDateTime.now().minusDays(1);
+                int randomDays = random.nextInt(4); // TRA 0 E 4 GIORNI
+
+
+                int randomHour = 18 + random.nextInt(5); // TRA LE 18:00 E LE 22:59
+
+
+                int randomMinutes = random.nextInt(60); //MINUTI E SECONDI TRA 0 E 59
+                int randomSeconds = random.nextInt(60);
+
+                LocalDateTime orderDate = LocalDateTime.now()
+                        .plusDays(randomDays)
+                        .withHour(randomHour)
+                        .withMinute(randomMinutes)
+                        .withSecond(randomSeconds);
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'ore' HH:mm");
                 String formattedDate = orderDate.format(formatter);

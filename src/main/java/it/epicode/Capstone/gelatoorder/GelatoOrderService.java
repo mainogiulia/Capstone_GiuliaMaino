@@ -51,8 +51,16 @@ public class GelatoOrderService {
         GelatoOrder gelatoOrder = new GelatoOrder();
         gelatoOrder.setCostumerName(gelatoOrderRequest.getCostumerName()); // IMPOSTA IL NOME INSERITO DALL'UTENTE
         gelatoOrder.setEmail(gelatoOrderRequest.getEmail()); // IMPOSTA L'EMAIL INSERITA DALL'UTENTE
-        gelatoOrder.setOrderDate(gelatoOrderRequest.getOrderDate());
         gelatoOrder.setStatus(status);
+
+        LocalDateTime orderDate = gelatoOrderRequest.getOrderDate();
+        int hour = orderDate.getHour();
+
+        if (hour < 18 || hour >= 23) {
+            throw new IllegalArgumentException("L'orario deve essere compreso tra le 18:00 e le 23:00");
+        }
+
+        gelatoOrder.setOrderDate(orderDate);
 
         List<GelatoOrderDetail> gelatoOrderDetails = new ArrayList<>();
         int totalScoops = 0;

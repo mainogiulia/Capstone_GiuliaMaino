@@ -35,7 +35,7 @@ public class ReservationRunner implements CommandLineRunner {
 
                 reservation.setNumberOfGuests(faker.number().numberBetween(1, 15));
                 reservation.setCustomerName(faker.name().fullName());
-                reservation.setEmail(faker.name().username() + "@gmail.com");
+                reservation.setEmail(faker.internet().emailAddress());
                 reservation.setCancellationCode(faker.regexify("[A-Z0-9]{10}"));
 
                 reservationRepository.save(reservation);
